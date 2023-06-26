@@ -79,7 +79,7 @@ function Planner() {
 
     const scheduledEvents = useCallback(async function () {
         let response;
-        try { response = await fetch(`http://localhost:3000/users/getscheduledevents/${auth.userId}`, {
+        try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/getscheduledevents/${auth.userId}`, {
             method: "POST",
             headers : {
             "Content-Type" : "application/json",

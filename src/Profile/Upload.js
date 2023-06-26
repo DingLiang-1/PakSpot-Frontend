@@ -36,7 +36,7 @@ function Upload(props) {
         formData.append("description", formState.inputs.description.value);
         formData.append("address", formState.inputs.address.value);
         let response;
-            try { response = await fetch(`http://localhost:3000/shared/uploadpersonalpost/users/${auth.userId}`, {
+            try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/uploadpersonalpost/users/${auth.userId}`, {
                 method: "POST",
                 headers : {
                     "Authorization" : ("Bearer " + auth.token)
