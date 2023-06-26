@@ -1,0 +1,9 @@
+.postpopup-icons {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-around;
+    height:150px;
+    width:50px;
+    margin-left:10px;
+}

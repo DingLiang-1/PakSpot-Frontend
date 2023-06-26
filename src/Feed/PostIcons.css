@@ -1,0 +1,24 @@
+.postIcons {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-around;
+    height:250px;
+    width:50px
+}
+
+.postIcons button {
+    width:50px;
+    height:50px;
+    background-color:transparent;
+    border-color: transparent;
+    cursor: pointer;
+}
+
+.postIcons .fa-solid.fa-heart {
+    color:red;
+}
+
+.postIcons .fa-solid.fa-bookmark {
+    color:#020501dc;
+}

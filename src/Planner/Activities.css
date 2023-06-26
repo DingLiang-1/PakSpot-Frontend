@@ -1,0 +1,33 @@
+.events-container {
+    overflow: auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    height: 450px;
+    width:490px;
+    position:relative;
+}
+.events {
+    overflow: auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:top;
+    align-items: center;
+    height: 350px;
+    width:490px;
+    overflow: auto;
+}
+
+.events-container .current-date {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: left;
+    width:490px;
+    height:100px;
+    color:white
+}
+
+
+

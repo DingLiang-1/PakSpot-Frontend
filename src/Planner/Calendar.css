@@ -1,0 +1,77 @@
+.calendar {
+    margin-top : 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    width:490px;
+    position:relative;
+    height: 500px;
+}
+
+.calendar-grid {
+    display:grid;
+    grid-template-columns: repeat(7, 70px);
+    grid-template-rows: 30px repeat(6,70px)
+}
+
+.calendar-grid > p {
+    display:flex;
+    flex-direction:column-reverse;
+    text-align: center;
+}
+
+#calendar-year {
+    width:80px;
+    height:30px;
+    position:absolute;
+    left:0px;
+    top:0px;
+    border:none;
+    outline:none;
+    background-color: transparent;
+    font-size:20px;
+    font-family:"Poppins";
+    color:white;
+}
+
+#calendar-month {
+    width:80px;
+    height:40px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border:none;
+    outline:none;
+    font-size:30px;
+    font-family:"Poppins";
+    background-color: transparent;
+    color:white;
+}
+
+.calendar-grid .week-days {
+    color:white;
+}
+
+.calendar-grid > button.calendar-days {
+    background-color:white;
+    outline:none;
+    border-width:1px;
+    border-color: black;
+    position:relative;
+}
+
+.calendar-days .has-event {
+    position:absolute;
+    background-color:blueviolet;
+    outline:none;
+    border:none;
+    height:3px;
+    width:20px;
+    left:25px;
+    bottom:15px;
+}
+
+.calendar-grid > button.currentDate {
+    background-color:blueviolet;
+}

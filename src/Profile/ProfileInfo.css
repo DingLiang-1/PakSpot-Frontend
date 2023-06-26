@@ -1,0 +1,50 @@
+.profile-header {
+    height:25%;
+    width:100%;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-info {
+    width:150px;
+    height:105px;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-info h3 {
+    color:white;
+}
+
+.profile-pic {
+    object-fit: contain;
+    height:70px;
+    width:70px;
+    border-radius: 50%;
+}
+
+.profile-info-hr{
+    background-color:white;
+    height:0.01px;
+    width:100%;
+    position:absolute;
+    bottom:0px;
+}
+
+.logout-button {
+    position:absolute;
+    right:80px;
+    top:80px;
+    color:white;
+    background-color: red;
+    height:30px;
+    width:70px;
+    outline:none;
+    border:none;
+    border-radius:10px;
+}

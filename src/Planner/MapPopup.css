@@ -1,0 +1,53 @@
+.event-map-popup {
+    background-color: black;
+    margin-top : 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items: center;
+    width:490px;
+    height: 500px;
+}
+.event-map-popup-location {
+    flex-direction:column;
+    justify-content:center;
+    align-items: left;
+    width:490px;
+    height:50px;
+    color:white;
+}
+
+.event-map-popup-address {
+    flex-direction:column;
+    justify-content:center;
+    align-items: left;
+    width:490px;
+    height:50px;
+    color:white;
+}
+
+.event-map {
+    height:400px;
+    width:490px;
+}
+
+.event-map-popup-button {
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items: center;
+    height: 50px;
+    width:490px;
+}
+
+.event-map-popup-button > button{
+    background-color: red;
+    color:white;
+    border-radius:20px;
+    width:60px;
+    height:30px;
+    outline:none;
+    border:none;
+    font-size:15px;
+    font-family:"Poppins";
+}

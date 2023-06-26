@@ -1,0 +1,13 @@
+.hide-input {
+    display : none;
+}
+
+.input-error {
+    color:red;
+}
+
+p.input-error {
+    color:red;
+    font-size:13px;
+    font-family:"Poppins";
+}

@@ -1,0 +1,139 @@
+* {
+    font-family: "Poppins";
+    padding:0;
+    margin:0;
+  }
+  
+.background-auth {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #dde5f4;
+    height: 100vh;
+  }
+  
+.authForm {
+    background: #f1f7fe;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+    box-shadow: 0 0 2em #e6e9f9;
+    gap: 2em;
+    justify-content:center;
+    align-items:center;
+    width:450px;
+    height:75%;
+  }
+.authForm .logo {
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    min-width:40%;
+    max-width:40%;
+    max-height:20%;
+    min-height:20%;
+    margin-top:20px;
+  }
+  
+.authForm img {
+    width:100%;
+    height:100%;
+    border-radius:80%;
+    object-fit: contain;
+  }
+  
+.authForm form {
+min-width:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+}
+
+.authForm label {
+font-size: 13px;
+margin-left:13px;
+font-weight: 300;
+}
+.authForm .authInput {
+background: white;
+box-shadow: 0 0 2em #e6e9f9;
+min-width:85%;
+max-width:85%;
+min-height:55px;
+display: flex;
+flex-direction: column;
+gap: 0.5em;
+border-radius: 20px;
+justify-content:center;
+margin-bottom: 10px;
+}
+
+.authForm input {
+outline: none;
+border: none;
+margin-left:13px;
+width:85%
+}
+.authForm input::-moz-placeholder {
+color: black;
+font-size: 13px;
+}
+.authForm input:-ms-input-placeholder {
+color: black;
+font-size: 13px;
+}
+.authForm input::placeholder {
+color: black;
+font-size: 13px;
+}
+.authForm ion-icon {
+color: #4d4d4d;
+/*margin-bottom: -0.2em; */
+}
+
+.authForm .login {
+padding: 0.8em;
+background: #3e4684;
+color: white;
+border: none;
+border-radius: 30px;
+font-weight: 600;
+}
+
+.authForm .login.buttonDisable {
+    background: rgba(164, 163, 163, 0.731);
+}
+
+.authForm .footer {
+display: flex;
+font-size: 0.7em;
+color: #5e5e5e;
+gap: 14em;
+}
+.authForm .footer span {
+cursor: pointer;
+}
+
+.footer button {
+background-color:transparent;
+border-color: transparent;
+}
+
+.authForm p.input-error {
+    font-size:13px;
+    font-family:"Poppins";
+    position:relative;
+    margin-left:13px;
+}
+
+.authForm button {
+cursor: pointer;
+}
