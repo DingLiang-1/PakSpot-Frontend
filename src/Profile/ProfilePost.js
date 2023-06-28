@@ -22,7 +22,7 @@ function ProfilePost() {
     return (
         <div className = "profile-post">
             <div className = "profile-post-buttons">
-                <i className="fa-regular fa-square-plus fa-2x" onClick = {setPersonalType}></i>
+                <i className= "fal fa-image fa-2x" onClick = {setPersonalType}></i>
                 <i className = "fa-solid fa-bookmark fa-2x" onClick = {setBookmarkType}></i>
                 <i className="fa-regular fa-square-plus fa-2x" onClick = {setUploadType}></i>
             </div>

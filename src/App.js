@@ -45,7 +45,8 @@ function App() {
     };
   }, [login]);
 
-  let authPath = ((token) ? 
+  let authPath = (
+    (token) ? 
     {
       path : "/",
       element: <Background />,

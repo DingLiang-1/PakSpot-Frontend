@@ -44,7 +44,7 @@ function Upload(props) {
                 body: formData
             });
             if (response.ok) {
-                console.log("stored succesfully");
+                console.log("stored sucesfully");
             } else {
                 console.log("please try again");
             };

@@ -17,7 +17,7 @@ function Post(prop) {
     return (
         <div className = "post">
             {(popup) && <PlannerForm closeOnSubmit = {closeOnSubmit}/>}
-            <h3>{prop.placeName}</h3>
+            <h3>{prop.location}</h3>
             <Media  
                 images = {prop.images}
                 popped = {togglePopup}

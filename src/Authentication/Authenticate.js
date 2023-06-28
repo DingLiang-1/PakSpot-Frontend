@@ -19,7 +19,8 @@ function Authenticate() {
         event.preventDefault();
         let response;
         if (hasAccount) {
-            try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/auth/users/login`, {
+            console.log(process.env.REACT_APP_BACKEND_URL + "/shared/auth/users/login")
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + "/shared/auth/users/login"), {
                 method: "POST",
                 headers : {
                 "Content-Type" : "application/json"
@@ -34,13 +35,13 @@ function Authenticate() {
                     auth.login(data.userId,data.token);
                 });
             } else {
-                console.log("please try again");
+                console.log("here please try again");
             };
         } catch(err) {
             console.log(err);
         };
         } else {
-            try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/auth/users/register`, {
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + "/shared/auth/users/register"), {
                 method: "POST",
                 headers : {
                 "Content-Type" : "application/json"

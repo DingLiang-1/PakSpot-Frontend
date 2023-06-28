@@ -1,47 +1,68 @@
-import React, {useState} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import "./PersonalPost.css";
 import PostPopup from "./PostPopup.js";
+import { AuthContext } from "../Shared/AuthContext";
 
 function PersonalPost(props) {
     const [gridFormat, setGridFormat] = useState(true);
-    const [postID, setPostID] = useState();
-    let personalPost = [1]; /*props.personalPost*/
-    let firstImagePost = [1];
+    const [personalPost, setPersonalPost] = useState([]);
+    const [firstImages, setFirstImages] = useState([]);
+    const [popupImageIndex, setPopupImageIndex] = useState(0);
+    const auth = useContext(AuthContext);
+    useEffect(() => {
+        async function getImages() {
+            let response;
+            try {
+                response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/personalpost/users/${auth.userId}`, {
+                        method: "GET",
+                        headers : {
+                            "Authorization" : ("Bearer " + auth.token)
+                        },
+                    });
+                    if (response.ok) {
+                        console.log("retrieved sucesfully");
+                    } else {
+                        console.log("please try again");
+                    };
+            } catch(err) {
+                    console.log(err);
+            };
+            await response.json().then(postArray => {
+                let reversedPostArray = postArray.reverse();
+                setPersonalPost(reversedPostArray);
+                setFirstImages(reversedPostArray.map(post => {
+                    let imageUrls = post.images;
+                    return (imageUrls.length ? imageUrls[0] : null);
+                }));
+        });
+        };
+        getImages();
+    }, []);
 
     function postPopup(event) {
         setGridFormat(false);
-        setPostID(event.target.id);
+        setPopupImageIndex(parseInt(event.currentTarget.id.slice(-1)));
     };
 
     function setToGrid() {
         setGridFormat(true);
     };
 
-    if (personalPost) {
+    if (personalPost.length) {
         return (
             (gridFormat ? (
                 <div className = "post-grid">
-                    <div className = "post-grid-image" onClick = {postPopup}>
-                        <img id ="uid123" src = {require("../Resources/Images/TanjongBeachClub/Image3.jpg")} />
-                    </div>
-                    <div className = "post-grid-image"  onClick = {postPopup}>
-                        <img src = {require("../Resources/Images/TanjongBeachClub/Image4.jpg")} />
-                    </div>
-                    <div className = "post-grid-image" onClick = {postPopup}>
-                        <img src = {require("../Resources/Images/TanjongBeachClub/Image3.jpg")} />
-                    </div>
-                    <div className = "post-grid-image" onClick = {postPopup}>
-                        <img src = {require("../Resources/Images/TanjongBeachClub/Image4.jpg")} />
-                    </div>
-                </div>) :
+                    {firstImages.map( (image,index) => (
+                        <div key = {index} id = {"personal-post-id-" + index} className = "post-grid-image" onClick = {postPopup}>
+                            <img src = {image} />
+                        </div>))}
+                </div> ):
                (<div className = "expand-post">
                     <div className = "back-to-grid">
                         <i className="fa-solid fa-arrow-left fa-2x" onClick = {setToGrid}></i>
                     </div>
                     <PostPopup
-                        placeName = "Tanjong beach club"
-                        images = {[1,2,3]}
-                        description = "test"
+                        post = {personalPost[popupImageIndex]}
                     />
                 </div>) 
 

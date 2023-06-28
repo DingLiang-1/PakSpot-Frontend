@@ -3,16 +3,18 @@ import "./PostPopup.css";
 import MediaPopup from "./MediaPopup.js";
 
 
-function Post(prop) {
+function PostPopup(prop) {
     return (
-        <div className = "post-popup">
-            <h3>{prop.placeName}</h3>
-            <MediaPopup
-                images = {prop.images}
-            />
-            <p>{prop.description}</p>
-        </div>
+        prop ? 
+            (<div className = "post-popup">
+                <h3>{prop.post.location}</h3>
+                <MediaPopup
+                    images = {prop.post.images}
+                />
+                <p>{prop.post.description}</p>
+            </div>) :
+        (<p>No post yet</p>)
     );
 };
 
-export default Post;
+export default PostPopup;

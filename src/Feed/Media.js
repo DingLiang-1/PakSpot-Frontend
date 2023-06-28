@@ -12,7 +12,7 @@ function Media(prop) {
                 {prop.images.map((image,index) => { 
                     return (
                         <SplideSlide key = {index}>
-                            <img src = {require("../Resources/Images/TanjongBeachClub/Image3.jpg")} />
+                            <img src = {image} />
                         </SplideSlide>
                     );
                 })}
