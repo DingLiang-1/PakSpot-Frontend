@@ -43,8 +43,8 @@ function PlannerForm(prop) {
                     startTime : formState.inputs.plannerPopupStartTime.value,
                     endTime : formState.inputs.plannerPopupEndTime.value,
                     description : formState.inputs.plannerPopupeDescription.value,
-                    location : "Tangjong Beach Club",
-                    address : "120 Tanjong Beach Walk, 098942"
+                    location : prop.location,
+                    address : prop.address
                 })
             });
             if (response.ok) {

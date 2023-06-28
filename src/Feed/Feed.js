@@ -31,6 +31,7 @@ function Feed() {
         };
         getImages();
     }, []);
+    console.log(process.env.REACT_APP_BACKEND_URL + "/shared/feed");
     return (
         <div className = "feed">
             {businessFeed.map((post,index) => {
