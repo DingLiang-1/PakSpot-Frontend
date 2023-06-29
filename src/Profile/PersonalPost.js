@@ -10,6 +10,7 @@ function PersonalPost(props) {
     const [popupImageIndex, setPopupImageIndex] = useState(0);
     const auth = useContext(AuthContext);
     useEffect(() => {
+        props.openLoadingPopup();
         async function getImages() {
             let response;
             try {
@@ -37,6 +38,7 @@ function PersonalPost(props) {
         });
         };
         getImages();
+        props.closeLoadingPopup();
     }, []);
 
     function postPopup(event) {
@@ -65,27 +67,7 @@ function PersonalPost(props) {
                         post = {personalPost[popupImageIndex]}
                     />
                 </div>) 
-
-
-            /*(<React.Fragment>
-            <div className = "back-to-grid">
-                <i className="fa-solid fa-arrow-left fa-2x" onClick = {setToGrid}></i>
-            </div>
-            <div className = "post-scroll">
-                    <div className = "post-scroll-image" >
-                        <img src = {require("../Resources/Images/TanjongBeachClub/Image3.jpg")} />
-                    </div>
-                    <div className = "post-scroll-image" >
-                        <img src = {require("../Resources/Images/TanjongBeachClub/Image4.jpg")} />
-                    </div>
-                    <div className = "post-scroll-image" >
-                        <img src = {require("../Resources/Images/TanjongBeachClub/Image3.jpg")} />
-                    </div>
-                    <div className = "post-scroll-image" >
-                        <img src = {require("../Resources/Images/TanjongBeachClub/Image4.jpg")} />
-                    </div>
-            </div>
-            </React.Fragment>)*/));
+            ));
     } else {
         return (<h2>NO POST YET</h2>);
     };
@@ -93,15 +75,4 @@ function PersonalPost(props) {
 
 export default PersonalPost;
 
-/*firstImagePost.map((image,index) => {
-                    <div className = "post-grid-image" key = {index} onClick = {setToScroll}>
-                        <img src = {image} />
-                    </div>
-                })*/
-
-                /*personalPost.map((image,index) => {
-                    <div className = "post-scroll-image" key = {index}>
-                        <img src = {image} />
-                    </div>
-                })*/
 

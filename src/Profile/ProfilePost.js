@@ -4,7 +4,7 @@ import PersonalPost from "./PersonalPost.js";
 import BookmarkPost from "./BookmarkPost.js";
 import Upload from "./Upload.js";
 
-function ProfilePost() {
+function ProfilePost(props) {
     const [postType, setPostType] = useState("PERSONAL"); 
     function setPersonalType() {
         setPostType("PERSONAL");
@@ -26,9 +26,21 @@ function ProfilePost() {
                 <i className = "fa-solid fa-bookmark fa-2x" onClick = {setBookmarkType}></i>
                 <i className="fa-regular fa-square-plus fa-2x" onClick = {setUploadType}></i>
             </div>
-            {postType === "PERSONAL" && <PersonalPost />}
-            {postType === "BOOKMARKED" && <BookmarkPost />}
-            {postType === "UPLOAD" && <Upload />}
+            {postType === "PERSONAL" && <PersonalPost 
+                closeLoadingPopup = {props.closeLoadingPopup}
+                openLoadingPopup = {props.openLoadingPopup}
+                openNotifPopup = {props.openNotifPopup}
+            />}
+            {postType === "BOOKMARKED" && <BookmarkPost 
+                closeLoadingPopup = {props.closeLoadingPopup}
+                openLoadingPopup = {props.openLoadingPopup}
+                openNotifPopup = {props.openNotifPopup}
+            />}
+            {postType === "UPLOAD" && <Upload 
+                closeLoadingPopup = {props.closeLoadingPopup}
+                openLoadingPopup = {props.openLoadingPopup}
+                openNotifPopup = {props.openNotifPopup}
+            />}
         </div>
     );
 }

@@ -11,6 +11,7 @@ function Upload(props) {
     const [imageFiles, updateImageFiles] = useState([]);
     const [sliderIndex, setSliderIndex] = useState(0);
     const [previewURL, setPreviewURL] = useState();
+    const [isLoading, setLoading] = useState(false);
     const [formState, handleOverallValidity] = useForm({
         location : {
             value : "",
@@ -25,9 +26,11 @@ function Upload(props) {
             isValid : false,
         }
     },false);
-
+    
     async function submitForm(event) {
         event.preventDefault();
+        props.openLoadingPopup();
+        console.log("pass2");
         let formData = new FormData();
         for (let i = 0; i < imageFiles.length; i++) {
             formData.append("uploads", imageFiles[i]);
@@ -36,22 +39,27 @@ function Upload(props) {
         formData.append("description", formState.inputs.description.value);
         formData.append("address", formState.inputs.address.value);
         let response;
-            try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/uploadpersonalpost/users/${auth.userId}`, {
-                method: "POST",
-                headers : {
-                    "Authorization" : ("Bearer " + auth.token)
-                },
-                body: formData
-            });
-            if (response.ok) {
-                console.log("stored sucesfully");
-            } else {
-                console.log("please try again");
-            };
+        try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/uploadpersonalpost/users/${auth.userId}`, {
+            method: "POST",
+            headers : {
+                "Authorization" : ("Bearer " + auth.token)
+            },
+            body: formData
+        });
+        if (response.ok) {
+            props.closeLoadingPopup();
+            props.openNotifPopup("Post uploaded successfully, view your post in your personal uploads.")
+            console.log("stored sucesfully");
+            return;
+        } else {
+            props.closeLoadingPopup();
+            response.json().then(resObj => {props.openNotifPopup(resObj.error);});
+            return;
+        };
         } catch(err) {
             console.log(err);
-        }
-        console.log("send to backend");
+            return;
+        };
     }; 
 
     function accessImageInput() {
