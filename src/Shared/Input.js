@@ -36,6 +36,7 @@ function Input(props) {
 
     function handleChange(event) {
         dispatch({type:"CHANGE", val:event.target.value, validators:props.validators});
+        (props.cachePassword && props.cachePassword(event.target.value));
     };
 
     function handleTouch(event) {

@@ -14,6 +14,7 @@ function Authenticate() {
     const [notifPopup, setNotifPopup] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [notifMessage, setNotifMessage] = useState("");
+    const [password, cachePassword] = useState("");
     function closeNotifPopup(event) {
         setNotifPopup(false);
     };
@@ -61,7 +62,7 @@ function Authenticate() {
             };
         } catch(err) {
             closeLoadingPopup();
-            openNotifPopup("Unknown error occurred, please try again!");
+            openNotifPopup("An unknown error occurred, please try again!");
             return;
         };
         } else {
@@ -78,6 +79,8 @@ function Authenticate() {
             });
             if (response.ok) {
                 closeLoadingPopup();
+                removeInputs(["username", "reEnterPassword"]);
+                response.json().then(res => {openNotifPopup(res.message);})
                 updateAccountStatus(initial => !initial);
                 return;
             } else {
@@ -126,9 +129,9 @@ return (
             label = "Username"
             inputType="text" 
             placeholder="Username"
-            errorAlert = "Invalid Format"
+            errorAlert = "Username needs to have at least 8 characters"
             validators = {{
-                requiredField : ((value) => value.length > 0),
+                requiredField : ((value) => value.length >= 8),
             }}
             onInput = {handleOverallValidity}
         />
@@ -140,7 +143,7 @@ return (
             label = "Email Address"
             inputType="email" 
             placeholder="Username@gmail.com"
-            errorAlert = "Invalid Format"
+            errorAlert = "Please enter a valid email address"
             validators = {{
                 requiredField : ((value) => value.length > 0),
             }}
@@ -153,11 +156,12 @@ return (
             label = "Password"
             inputType="password" 
             placeholder="Password"
-            errorAlert = "Invalid Format"
+            errorAlert = "Password needs to have at least 8 characters"
             validators = {{
-                requiredField : ((value) => value.length > 0),
+                requiredField : ((value) => value.length >= 8),
             }}
             onInput = {handleOverallValidity}
+            cachePassword = {cachePassword}
         />
         {!hasAccount && 
         <Input 
@@ -165,11 +169,11 @@ return (
             id = "reEnterPassword"
             type = "input"
             label = "Re-enter Password"
-            inputType="text" 
+            inputType="password" 
             placeholder="Password"
-            errorAlert = "Invalid Format"
+            errorAlert = "Password does not match."
             validators = {{
-                requiredField : ((value) => value.length > 0),
+                requiredField : ((value) => (value.length >= 8), (value) => (value === password)),
             }}
             onInput = {handleOverallValidity}
         />}
