@@ -63,6 +63,11 @@
     margin-left:10px;
 }
 
+.personal-upload p.input-error {
+    margin-left:10px;
+}
+
+
 .image-selector {
     height:430px;
     width: 90%;

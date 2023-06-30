@@ -5,9 +5,10 @@ function inputReducer(state, action) {
     switch (action.type) {
         case "CHANGE" :
             let isValid = true;
-            for (const validators in action.validators) {
-                isValid = isValid && action.validators[validators](action.val);
-            }
+            action.validators.forEach(validator => {
+                isValid = isValid && validator(action.val);
+                return;
+            });
             return ({
                 ...state,
                 value: action.val,

@@ -35,10 +35,11 @@ function PersonalPost(props) {
                     let imageUrls = post.images;
                     return (imageUrls.length ? imageUrls[0] : null);
                 }));
+                props.closeLoadingPopup();
+                return;
         });
         };
         getImages();
-        props.closeLoadingPopup();
     }, []);
 
     function postPopup(event) {

@@ -130,9 +130,9 @@ return (
             inputType="text" 
             placeholder="Username"
             errorAlert = "Username needs to have at least 8 characters"
-            validators = {{
-                requiredField : ((value) => value.length >= 8),
-            }}
+            validators = {[
+                ((value) => value.length >= 8)
+            ]}
             onInput = {handleOverallValidity}
         />
         }
@@ -144,9 +144,9 @@ return (
             inputType="email" 
             placeholder="Username@gmail.com"
             errorAlert = "Please enter a valid email address"
-            validators = {{
-                requiredField : ((value) => value.length > 0),
-            }}
+            validators = {[
+                ((value) => value.length > 0)
+            ]}
             onInput = {handleOverallValidity}
         />
         <Input 
@@ -157,9 +157,9 @@ return (
             inputType="password" 
             placeholder="Password"
             errorAlert = "Password needs to have at least 8 characters"
-            validators = {{
-                requiredField : ((value) => value.length >= 8),
-            }}
+            validators = {[
+                ((value) => value.length >= 8)
+            ]}
             onInput = {handleOverallValidity}
             cachePassword = {cachePassword}
         />
@@ -172,9 +172,9 @@ return (
             inputType="password" 
             placeholder="Password"
             errorAlert = "Password does not match."
-            validators = {{
-                requiredField : ((value) => (value.length >= 8), (value) => (value === password)),
-            }}
+            validators = {[
+                ((value) => (value === password))
+            ]}
             onInput = {handleOverallValidity}
         />}
             <button type = "submit" className={"login" + (!formState.formValid ? " buttonDisable" : "")} disabled = {!formState.formValid} onClick = {handleSubmit}>{hasAccount ? "Login" : "Signup"}</button>

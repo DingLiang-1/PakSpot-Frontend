@@ -69,12 +69,15 @@ function PlannerForm(prop) {
                     type = "input"
                     inputType = "text"
                     placeholder = "YYYY-MM-DD" 
-                    errorAlert = "Invalid Format"
-                    validators = {{
-                        requiredField : ((value) => value.length === 10),
-                        checkformat : ((value) => {
+                    errorAlert = "Invalid Format, please try again"
+                    validators = {[
+                        ((value) => value.length === 10),
+                        ((value) => {
                             let date;
                             try {
+                                if (value.length !== 10) {
+                                    return false;
+                                };
                                 date = new Date(value);
                                 if (date) {
                                     return (date.toString() !== "Invalid Date");
@@ -85,7 +88,7 @@ function PlannerForm(prop) {
                                 return false;
                             };
                         }),
-                    }}
+                    ]}
                     onInput = {handleOverallValidity}
                 />
                 <div className = "plannerPopupTime">
@@ -97,10 +100,29 @@ function PlannerForm(prop) {
                     type = "input"
                     inputType = "text"
                     placeholder = "HH:MM"
-                    errorAlert = "Invalid Format"
-                    validators = {{
-                        requiredField : ((value) => value.length === 5),
-                    }}
+                    errorAlert = "Invalid format, please try again"
+                    validators = {[
+                            (value) => (value.length === 5),
+                            (value) => (value.slice(2,3) === ":"),
+                            (value) => {
+                                let HH = value.slice(0,2);
+                                try {
+                                    HH = parseInt(HH);
+                                    return (HH < 24 && HH >= 0);
+                                } catch (err) {
+                                    return false;
+                                };
+                            },
+                            (value) => {
+                                let MM = value.slice(-2);
+                                try {
+                                    MM = parseInt(MM);
+                                    return (MM < 60 && MM >= 0);
+                                } catch (err) {
+                                    return false;
+                                };
+                            }
+                    ]}
                     onInput = {handleOverallValidity}
                 />
                 
@@ -112,10 +134,29 @@ function PlannerForm(prop) {
                     type = "input"
                     inputType = "text"
                     placeholder = "HH:MM"
-                    validators = {{
-                        requiredField : ((value) => value.length === 5 ),
-                    }}
-                    errorAlert = "Invalid Format"
+                    validators = {[
+                        (value) => (value.length === 5),
+                        (value) => (value.slice(2,3) === ":"),
+                        (value) => {
+                            let HH = value.slice(0,2);
+                            try {
+                                HH = parseInt(HH);
+                                return (HH < 24 && HH >= 0);
+                            } catch (err) {
+                                return false;
+                            };
+                        },
+                        (value) => {
+                            let MM = value.slice(-2);
+                            try {
+                                MM = parseInt(MM);
+                                return (MM < 60 && MM >= 0);
+                            } catch (err) {
+                                return false;
+                            };
+                        }
+                ]}
+                    errorAlert = "Invalid format, please try again"
                     onInput = {handleOverallValidity}
                 />
 
@@ -129,10 +170,10 @@ function PlannerForm(prop) {
                     inputType = "text"
                     placeholder = "Max 50 Characters"            
                     rows = "3"
-                    validators = {{
-                        requiredField : ((value) => value.length > 0),
-                    }}
-                    errorAlert = "Please enter a maximum of 50 characters"
+                    validators = {[
+                        ((value) => value.length > 0 && value.length <= 250)
+                    ]}
+                    errorAlert = "Please enter a maximum of 250 characters"
                     onInput = {handleOverallValidity}
                 />
                 <button type = "submit" className = "post1" disabled = {!formState.formValid}>Submit</button>

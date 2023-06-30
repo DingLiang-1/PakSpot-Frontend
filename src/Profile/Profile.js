@@ -25,7 +25,7 @@ function Profile() {
     function closeLoadingPopup(event) {
         setIsLoading(false);
     };
-    
+
     return (
         <div className = "profile">
             {notifPopup && 
@@ -39,7 +39,6 @@ function Profile() {
                 <Notification 
                     login = {true}
                     type = "loading"
-                    handleNotifPopup = {closeNotifPopup}
                 />}
             <ProfileInfo />
             <ProfilePost 

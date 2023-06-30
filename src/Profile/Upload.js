@@ -153,10 +153,10 @@ function Upload(props) {
                 type = "input"
                 inputType = "text"
                 placeholder = "Location" 
-                errorAlert = "Invalid Format"
-                validators = {{ 
-                    requiredField : ((value) => value.length > 0),
-                }}
+                errorAlert = "Please enter a valid location"
+                validators = {[
+                  ((value) => value.length > 0)
+                ]}
                 onInput = {handleOverallValidity}
             />
             <Input 
@@ -166,10 +166,10 @@ function Upload(props) {
                 type = "input"
                 inputType = "text"
                 placeholder = "Address" 
-                errorAlert = "Invalid Format"
-                validators = {{ 
-                    requiredField : ((value) => value.length > 0),
-                }}
+                errorAlert = "Please enter a valid address"
+                validators = {[
+                    ((value) => value.length > 0)
+                ]}
                 onInput = {handleOverallValidity}
             />
             <Input 
@@ -178,11 +178,11 @@ function Upload(props) {
                 label = "Description"
                 type = "textarea"
                 inputType = "text"
-                placeholder = "Max 50 Characters" 
-                errorAlert = "Invalid Format"
-                validators = {{ 
-                    requiredField : ((value) => value.length > 0),
-                }}
+                placeholder = "Description" 
+                errorAlert = "Required field"
+                validators = {[ 
+                    ((value) => value.length > 0)
+                ]}
                 onInput = {handleOverallValidity}
             />
             <div className = "upload-submit-button">

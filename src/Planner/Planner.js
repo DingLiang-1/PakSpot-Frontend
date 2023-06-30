@@ -4,7 +4,7 @@ import Activities from "./Activities.js";
 import "./Planner.css";
 import MapPopup from "./MapPopup.js";
 import { AuthContext } from "../Shared/AuthContext.js";
-
+import Notification from "../Shared/Notification.js";
 
 function plannerReducer(state, action) {
     switch (action.type) {
@@ -77,8 +77,18 @@ function Planner() {
     
     const [loadedData, setLoadedData] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+
+    function openLoadingPopup(event) {
+        setIsLoading(true);
+    };
+    function closeLoadingPopup(event) {
+        setIsLoading(false);
+    };
+
     const scheduledEvents = useCallback(async function () {
         let response;
+        openLoadingPopup();
         try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/getscheduledevents/${auth.userId}`, {
             method: "POST",
             headers : {
@@ -92,6 +102,8 @@ function Planner() {
             });
             if (response.ok) {
                 await response.json().then(data => setLoadedData(data.events));
+                closeLoadingPopup();
+                return;
             } else {
                 console.log("an error occured");
             }
@@ -111,6 +123,10 @@ function Planner() {
 
     return (
     <div className = "planner">
+        {isLoading && <Notification 
+                    login = {true}
+                    type = "loading"
+                />}
         {mapPopupState.popup ? (
             <MapPopup 
                 lat = {mapPopupState.lat}
