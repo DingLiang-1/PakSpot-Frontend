@@ -1,15 +1,13 @@
 import React from "react";
-import PostPopupIcons from "./PostPopupIcons.js";
-import "./MediaPopup.css";
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 
 
-function MediaPopup(prop) {
+function MediaModule(props) {
 
     return (
-        <div className = "media-popup">
-            <Splide aria-label="Media Post">
-                {prop.images.map((image,index) => { 
+        <div className = {props.mediaClassName}>
+            <Splide aria-label = {props.mediaClassName}>
+                {props.images.map((image,index) => { 
                     return (
                         <SplideSlide key = {index}>
                             <img src = {image} />
@@ -17,9 +15,9 @@ function MediaPopup(prop) {
                     );
                 })}
             </Splide>
-            <PostPopupIcons popped = {prop.popped} popup = {prop.popup}/>
+            {props.postIcons}
         </div> 
         );
 };
 
-export default MediaPopup;
+export default MediaModule;

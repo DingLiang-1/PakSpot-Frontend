@@ -5,25 +5,25 @@ import Input from "../Shared/Input.js";
 import { AuthContext } from "../Shared/AuthContext.js";
 
 
-function Upload(props) {
+function EditPost(props) {
     const auth = useContext(AuthContext);
     const previewRef = useRef();
     const [imageFiles, updateImageFiles] = useState([]);
     const [sliderIndex, setSliderIndex] = useState(0);
     const [previewURL, setPreviewURL] = useState();
-    const [isLoading, setLoading] = useState(false);
+    const [currentImageKeyAndLinks, editCurrentImageKeyAndLinks] = useState(props.currentImageKeyAndLinks);
     const [formState, handleOverallValidity] = useForm({
         location : {
-            value : "",
-            isValid : false,
+            value : props.location,
+            isValid : true,
         },
         description : { 
-            value : "",
-            isValid :false,
+            value : props.description,
+            isValid :true,
         },
         address : {
-            value : "",
-            isValid : false,
+            value : props.address,
+            isValid : true,
         }
     },false);
     
@@ -31,14 +31,16 @@ function Upload(props) {
         event.preventDefault();
         props.openLoadingPopup();
         let formData = new FormData();
-        for (let i = 0; i < imageFiles.length; i++) {
-            formData.append("uploads", imageFiles[i]);
-        };
+        imageFiles.forEach(file => {
+            formData.append("uploads", file);
+        });
+        currentImageKeyAndLinks.forEach(imageAndKeys => {formData.append("remainingImageKeys", imageAndKeys.key);});
         formData.append("location", formState.inputs.location.value);
         formData.append("description", formState.inputs.description.value);
         formData.append("address", formState.inputs.address.value);
+        formData.append("id", props.id);
         let response;
-        try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/uploadpersonalpost/users/${auth.userId}`, {
+        try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/editpersonalpost/users/${auth.userId}`, {
             method: "POST",
             headers : {
                 "Authorization" : ("Bearer " + auth.token)
@@ -47,14 +49,17 @@ function Upload(props) {
         });
         if (response.ok) {
             props.closeLoadingPopup();
-            props.openNotifPopup("Post uploaded successfully, view your post in your personal uploads.")
+            props.closeEditPostPopup();
+            props.setToGrid();
+            props.refreshPage();
+            await response.json().then(res => {props.openNotifPopup(res.message);});
             return;
         } else {
             props.closeLoadingPopup();
-            response.json().then(resObj => {props.openNotifPopup(resObj.error);});
+            await response.json().then(res => {props.openNotifPopup(res.error);});
             return;
         };
-        } catch(err) {
+        } catch(err) { 
             console.log(err);
             return;
         };
@@ -67,12 +72,11 @@ function Upload(props) {
     function addFileList(event) {
         let latestFilesList = event.target.files;
         let latestFilesLength = latestFilesList.length;
-        if (latestFilesList) {
+        if (latestFilesLength) {
+            setSliderIndex(initial => ((currentImageKeyAndLinks.length + imageFiles.length + latestFilesLength) - 1));
             if (imageFiles.length) {
-            setSliderIndex(initial => ((imageFiles.length + latestFilesLength) - 1));
-            updateImageFiles(initial => (initial.concat(Array.from(latestFilesList))));
+                updateImageFiles(initial => (initial.concat(Array.from(latestFilesList))));
             } else {
-                setSliderIndex(initial => (latestFilesLength- 1));
                 updateImageFiles(initial => (Array.from(latestFilesList)));
             };
         } else {
@@ -85,41 +89,54 @@ function Upload(props) {
     };
 
     function slideImageRight() {
-        setSliderIndex(initial => (initial === (imageFiles.length - 1) ? initial : initial + 1));
+        setSliderIndex(initial => (initial === (currentImageKeyAndLinks.length + imageFiles.length - 1) ? initial : initial + 1));
     };
 
     function removeImage() {
-        if (imageFiles.length) {
-            updateImageFiles(initial => {
-                let deepcopy = [...initial];
-                deepcopy.splice(sliderIndex,1);
-                console.log("removed");
-                return deepcopy;
-            });
+        if (imageFiles.length + currentImageKeyAndLinks.length) {
+            if (sliderIndex > (currentImageKeyAndLinks.length - 1)) {
+                let trueIndex = sliderIndex - currentImageKeyAndLinks.length;
+                updateImageFiles(initial => {
+                    let deepcopy = [...initial];
+                    deepcopy.splice(trueIndex,1);
+                    return deepcopy;
+                });
+            } else {
+                editCurrentImageKeyAndLinks(initial => {
+                    let deepCopy = [...initial];
+                    deepCopy.splice(sliderIndex,1);
+                    return deepCopy;
+                });
+            };
             setSliderIndex(initial => ((initial - 1 < 0) ? 0 : initial - 1));
+            return;
         } else {
             return;
         }
     };
 
     useEffect(() => {
-        if (imageFiles.length) {
-            const fileReader = new FileReader();
-            fileReader.onload = () => {
-                setPreviewURL(fileReader.result);
+        if (imageFiles.length + currentImageKeyAndLinks.length) {
+            if (sliderIndex > (currentImageKeyAndLinks.length - 1)) {
+                let trueIndex = sliderIndex - currentImageKeyAndLinks.length;
+                const fileReader = new FileReader();
+                fileReader.onload = () => {
+                    setPreviewURL(fileReader.result);
+                };
+                fileReader.readAsDataURL(imageFiles[trueIndex]);
+            } else {
+                setPreviewURL(currentImageKeyAndLinks[sliderIndex].link);
             };
-            fileReader.readAsDataURL(imageFiles[sliderIndex]);
-            console.log("loaded");
         } else {
             return;
         };
-    }, [imageFiles ,sliderIndex])
+    }, [imageFiles ,sliderIndex, currentImageKeyAndLinks])
 
     return (
         <form className = "personal-upload" onSubmit = {submitForm}>
 
             <div className = "image-selector">
-                {imageFiles.length ?  (
+                {imageFiles.length + currentImageKeyAndLinks.length ?  (
                     <React.Fragment>
                         <i className = "fa-solid fa-chevron-left fa-1x" onClick = {slideImageLeft}></i>
                         <img src = {previewURL}></img>
@@ -130,7 +147,7 @@ function Upload(props) {
             </div>
             <div className = "image-selector-button">
                 <button type = "button" id = "upload-add-button" onClick = {accessImageInput}>ADD</button>
-                <button type = "button" id = "upload-remove-button" onClick = {removeImage} disabled = {!imageFiles.length}>REMOVE</button>
+                <button type = "button" id = "upload-remove-button" onClick = {removeImage} disabled = {!(imageFiles.length + currentImageKeyAndLinks.length)}>REMOVE</button>
             </div>
             <input
                 ref = {previewRef}
@@ -155,6 +172,7 @@ function Upload(props) {
                   ((value) => value.length > 0)
                 ]}
                 onInput = {handleOverallValidity}
+                initialiseValue = {props.location}
             />
             <Input 
                 className = "personal-upload-location"
@@ -168,6 +186,7 @@ function Upload(props) {
                     ((value) => value.length > 0)
                 ]}
                 onInput = {handleOverallValidity}
+                initialiseValue = {props.address}
             />
             <Input 
                 className = "personal-upload-description"
@@ -181,15 +200,13 @@ function Upload(props) {
                     ((value) => value.length > 0)
                 ]}
                 onInput = {handleOverallValidity}
+                initialiseValue = {props.description}
             />
             <div className = "upload-submit-button">
-                <button type = "submit" disabled = {!formState.formValid || !imageFiles.length}>Submit</button>
+                <button type = "submit" disabled = {!formState.formValid || !(imageFiles.length + currentImageKeyAndLinks.length)}>Submit</button>
             </div>
         </form>
     );
 };
 
-export default Upload;
-
-
-
+export default EditPost;

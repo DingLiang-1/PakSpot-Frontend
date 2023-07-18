@@ -8,7 +8,14 @@ function PersonalPost(props) {
     const [personalPost, setPersonalPost] = useState([]);
     const [firstImages, setFirstImages] = useState([]);
     const [popupImageIndex, setPopupImageIndex] = useState(0);
+    const [editPostState, setEditPostState] = useState(false);
+    const [refreshPageState, toggleRefreshPageState] = useState(false);
     const auth = useContext(AuthContext);
+
+    function refreshPage() {
+        toggleRefreshPageState(initial => !initial);
+    };
+
     useEffect(() => {
         props.openLoadingPopup();
         async function getImages() {
@@ -32,7 +39,7 @@ function PersonalPost(props) {
                 let reversedPostArray = postArray.reverse();
                 setPersonalPost(reversedPostArray);
                 setFirstImages(reversedPostArray.map(post => {
-                    let imageUrls = post.images;
+                    let imageUrls = post.imageLinks;
                     return (imageUrls.length ? imageUrls[0] : null);
                 }));
                 props.closeLoadingPopup();
@@ -40,7 +47,7 @@ function PersonalPost(props) {
         });
         };
         getImages();
-    }, []);
+    }, [refreshPageState]);
 
     function postPopup(event) {
         setGridFormat(false);
@@ -49,6 +56,14 @@ function PersonalPost(props) {
 
     function setToGrid() {
         setGridFormat(true);
+    };
+
+    function closeEditPostPopup() {
+        setEditPostState(false);
+    };
+
+    function toggleEditPostPopup() {
+        setEditPostState(initial => !initial);
     };
 
     if (personalPost.length) {
@@ -62,10 +77,18 @@ function PersonalPost(props) {
                 </div> ):
                (<div className = "expand-post">
                     <div className = "back-to-grid">
-                        <i className="fa-solid fa-arrow-left fa-2x" onClick = {setToGrid}></i>
+                        <i className="fa-solid fa-arrow-left fa-2x" onClick = {editPostState ? closeEditPostPopup : setToGrid}></i>
                     </div>
                     <PostPopup
                         post = {personalPost[popupImageIndex]}
+                        closeLoadingPopup = {props.closeLoadingPopup}
+                        openLoadingPopup = {props.openLoadingPopup}
+                        openNotifPopup = {props.openNotifPopup}
+                        toggleEditPostPopup = {toggleEditPostPopup}
+                        closeEditPostPopup = {closeEditPostPopup}
+                        editPostState = {editPostState}
+                        refreshPage = {refreshPage}
+                        setToGrid = {setToGrid}
                     />
                 </div>) 
             ));

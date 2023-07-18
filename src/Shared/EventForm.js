@@ -1,27 +1,27 @@
-import React, { useCallback, useReducer, useContext} from "react";
-import "./PlannerForm.css";
-import Input from "../Shared/Input.js";
-import useForm from "../Shared/FormHook.js";
-import { AuthContext } from "../Shared/AuthContext.js";
+import React, {useContext} from "react";
+import "./EventForm.css";
+import Input from "./Input.js";
+import useForm from "./FormHook.js";
+import { AuthContext } from "./AuthContext.js";
 
-function PlannerForm(prop) {
+function EventForm(props) {
     const auth = useContext(AuthContext);
     
     const [formState, handleOverallValidity] =
         useForm({
-            plannerPopupDate : {
+            eventformdateinput : {
                 value : "",
                 isValid : false
             },
-            plannerPopupStartTime : {
+            eventformstarttimeinput : {
                 value : "",
                 isValid : false
             },
-            plannerPopupEndTime : {
+            eventformendtimeinput : {
                 value : "",
                 isValid : false
             },
-            plannerPopupeDescription : {
+            eventformdescriptioninput : {
                 value : "",
                 isValid : false
             }
@@ -29,42 +29,73 @@ function PlannerForm(prop) {
         false);
 
         async function submitForm(event) {
-            console.log("running");
             event.preventDefault();
             let response;
-            try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/addscheduledevent/${auth.userId}`, {
-                method: "POST",
-                headers : {
-                "Content-Type" : "application/json",
-                "Authorization" : ("Bearer " + auth.token),
-                },
-                body: JSON.stringify({
-                    date : formState.inputs.plannerPopupDate.value,
-                    startTime : formState.inputs.plannerPopupStartTime.value,
-                    endTime : formState.inputs.plannerPopupEndTime.value,
-                    description : formState.inputs.plannerPopupeDescription.value,
-                    location : prop.location,
-                    address : prop.address
-                })
-            });
-            if (response.ok) {
-    
-                prop.closeOnSubmit();
-                
-            } else {
-                console.log("please try again");
-            };
+            try { 
+                switch (props.type) {
+                    case "addEvent" :
+                        response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/addscheduledevent/${auth.userId}`, {
+                            method: "POST",
+                            headers : {
+                            "Content-Type" : "application/json",
+                            "Authorization" : ("Bearer " + auth.token),
+                            },
+                            body: JSON.stringify({
+                                date : formState.inputs.eventformdateinput.value,
+                                startTime : formState.inputs.eventformstarttimeinput.value,
+                                endTime : formState.inputs.eventformendtimeinput.value,
+                                description : formState.inputs.eventformdescriptioninput.value,
+                                location : props.location,
+                                address : props.address
+                            })
+                            });
+                        if (response.ok) {
+                            props.closeOnSubmit();
+                        } else {
+                            console.log("please try again");
+                        };
+                        return;
+                    case "editEvent" :
+                        props.openLoadingPopup();
+                        response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/editscheduledevent/${auth.userId}`, {
+                            method: "POST",
+                            headers : {
+                            "Content-Type" : "application/json",
+                            "Authorization" : ("Bearer " + auth.token),
+                            },
+                            body: JSON.stringify({
+                                date : formState.inputs.eventformdateinput.value,
+                                startTime : formState.inputs.eventformstarttimeinput.value,
+                                endTime : formState.inputs.eventformendtimeinput.value,
+                                description : formState.inputs.eventformdescriptioninput.value,
+                                eventId : props.eventId,
+                                eventDayId : props.eventDayId
+                            })
+                            }); 
+                        if (response.ok) {
+                            props.closeOnSubmit();
+                            props.closeLoadingPopup();
+                            props.refreshPage();
+                            response.json().then(res => {props.openEditEventNotifPopup(res.message);});
+                        } else {
+                            props.closeLoadingPopup();
+                            response.json().then(res => {props.openEditEventNotifPopup(res.error);});
+                        };
+                        return;
+                    default :
+                        return;
+                };  
         } catch(err) {
             console.log(err);
         }
     };
 
     return ( 
-        <form className = "plannerPopup" onSubmit = {submitForm} >
-                <h3>Set a date!</h3>
+        <form className = {"event-form " + props.eventFormClassName} onSubmit = {submitForm} >
+                <h3>{props.formHeader}</h3>
                 <Input 
-                    className = "plannerPopupInput"
-                    id = "plannerPopupDate"
+                    className = "event-form-input"
+                    id = "eventformdateinput"
                     label = "Date"
                     type = "input"
                     inputType = "text"
@@ -91,11 +122,11 @@ function PlannerForm(prop) {
                     ]}
                     onInput = {handleOverallValidity}
                 />
-                <div className = "plannerPopupTime">
+                <div className = "event-form-time">
 
                 <Input 
-                    className = "plannerPopupTimeInput"
-                    id = "plannerPopupStartTime"
+                    className = "event-form-time-input"
+                    id = "eventformstarttimeinput"
                     label = "Start Time"
                     type = "input"
                     inputType = "text"
@@ -128,8 +159,8 @@ function PlannerForm(prop) {
                 
 
                 <Input 
-                    className = "plannerPopupTimeInput"
-                    id = "plannerPopupEndTime"
+                    className = "event-form-time-input"
+                    id = "eventformendtimeinput"
                     label = "End Time"
                     type = "input"
                     inputType = "text"
@@ -163,12 +194,12 @@ function PlannerForm(prop) {
                 </div>
 
                 <Input 
-                    className = "plannerPopupInput"
-                    id = "plannerPopupeDescription"
+                    className = "event-form-input"
+                    id = "eventformdescriptioninput"
                     label = "Description"
                     type = "textarea"
                     inputType = "text"
-                    placeholder = "Max 50 Characters"            
+                    placeholder = "Max 250 Characters"            
                     rows = "3"
                     validators = {[
                         ((value) => value.length > 0 && value.length <= 250)
@@ -181,4 +212,4 @@ function PlannerForm(prop) {
     );
 };
 
-export default PlannerForm;
+export default EventForm;

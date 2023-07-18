@@ -3,6 +3,12 @@ import "./EventBar.css"
 
 function EventBar(props) {
     const [dropDown, setDropDown] = useState(false);
+
+    function toggleEditEventForm(event) {
+        event.stopPropagation();
+        props.toggleEditEventForm(props.eventId,props.eventDayId);
+    };
+
     function handleDropDown() {
         setDropDown(prev => !prev);
     };
@@ -12,16 +18,17 @@ function EventBar(props) {
         props.handleMapPopup(parseFloat(props.lat),parseFloat(props.lng),props.location,props.address);
     }; 
 
-    function test(event) {
-        console.log("works");
+    function openDeleteEventPopup(event) {
+        event.stopPropagation();
+        props.openDeleteEventNotif(props.eventId,props.eventDayId);
     };
 
     return (
     <div className = {"event" + (dropDown ? " event-drop-down" : "")} onClick ={handleDropDown}>
         <div className = "event-bar-icons">
             <i className="fa-solid fa-map-location-dot fa-xl" onClick = {handleMapPopup}></i>
-            <i className="fa-solid fa-pen-to-square fa-xl" onClick = {test}></i>
-            <i className="fa-solid fa-trash fa-xl" onClick = {test}></i>
+            <i className="fa-solid fa-pen-to-square fa-xl" onClick = {toggleEditEventForm}></i>
+            <i className="fa-solid fa-trash fa-xl" onClick = {openDeleteEventPopup}></i>
         </div>
         <div className = "event-details"><h4>Location :</h4> <p>{props.location}</p></div>
         <div className = "event-details"><h4>Address     :</h4> <p>{props.address}</p></div>

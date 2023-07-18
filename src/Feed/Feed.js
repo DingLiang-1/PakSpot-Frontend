@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import Post from "./Post.js";
+import PostModule from "../Shared/PostModule.js";
 import "./Feed.css";
+import "./Media.css";
+import "./Post.css";
 import { AuthContext } from "../Shared/AuthContext.js";
 import Notification from "../Shared/Notification.js";
+import PostIcons from "./PostIcons.js";
 
 function Feed() {
     const [businessFeed, setBusinessFeed] = useState([]);
@@ -44,7 +47,13 @@ function Feed() {
         };
         getImages();
     }, []);
-    console.log(process.env.REACT_APP_BACKEND_URL + "/shared/feed");
+
+    function postIcons(toggle) {
+        return <PostIcons 
+            togglePopup = {toggle}
+        />
+    };
+
     return (
         <div className = "feed">
             {isLoading && <Notification 
@@ -53,12 +62,19 @@ function Feed() {
                 />}
             {businessFeed.map((post,index) => {
                 return (
-                <Post 
+                <PostModule 
+                    id = {index}
+                    form = {true}
+                    postClassName = "post"
+                    type = "addEvent"
+                    mediaClassName = "media"
                     location = {post.location}
                     images = {post.images}
-                    id = {index}
                     description = {post.description}
                     address = {post.address}
+                    postIcons = {postIcons}
+                    formHeader = "Set Date"
+                    eventFormClassName = "feedEventFormPopup"
                 />
                 )})}
         </div>

@@ -4,6 +4,7 @@
     justify-content: flex-start;
     align-items:center;
     height:100%;
-    overflow:auto;
+    width:100%;
     position:relative;
+    overflow-y: scroll;
 }

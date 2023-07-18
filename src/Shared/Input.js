@@ -26,7 +26,7 @@ function inputReducer(state, action) {
 
 
 function Input(props) {
-    const [inputState, dispatch] = useReducer(inputReducer, {isTouched:false, value:"", isValid:false})
+    const [inputState, dispatch] = useReducer(inputReducer, {isTouched:false, value: (props.initialiseValue || ""), isValid: (props.initialiseValue ? true : false)})
 
     const {isValid, value} = inputState;
     const {onInput, id} = props;

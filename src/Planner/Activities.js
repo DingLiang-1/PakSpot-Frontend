@@ -19,7 +19,8 @@ function Activities(props) {
                     props.eventDay.events.map((event,index) => 
                         (<EventBar
                             key = {event._id}
-                            id = {event._id}
+                            eventDayId = {props.eventDay._id}
+                            eventId = {event._id}
                             location = {event.location}
                             address = {event.address}
                             startTime = {event.startTime}
@@ -28,6 +29,8 @@ function Activities(props) {
                             lat = {event.coor.lat}
                             lng = {event.coor.lng}
                             handleMapPopup = {props.handleMapPopup}
+                            toggleEditEventForm = {props.toggleEditEventForm}
+                            openDeleteEventNotif = {props.openDeleteEventNotif}
                         />)) :
                     <h3>NO EVENTS SCHEDULED</h3>
                 :
