@@ -34,7 +34,7 @@ function EventForm(props) {
             try { 
                 switch (props.type) {
                     case "addEvent" :
-                        response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/addscheduledevent/${auth.userId}`, {
+                        response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${auth.entity}/addscheduledevent/${auth.userId}`, {
                             method: "POST",
                             headers : {
                             "Content-Type" : "application/json",
@@ -57,7 +57,7 @@ function EventForm(props) {
                         return;
                     case "editEvent" :
                         props.openLoadingPopup();
-                        response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/editscheduledevent/${auth.userId}`, {
+                        response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${auth.entity}/editscheduledevent/${auth.userId}`, {
                             method: "POST",
                             headers : {
                             "Content-Type" : "application/json",

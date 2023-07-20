@@ -12,11 +12,13 @@ let logoutTimer;
 function App() {
   const [token,setToken] = useState(false);
   const [userId, setUserId] = useState(false);
+  const [entity, setEntity] = useState(false);
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
 
-  const login = useCallback((uid,tokenNew, expirationDate) => {
+  const login = useCallback((uid, tokenNew, entity, expirationDate) => {
     setToken(tokenNew);
     setUserId(uid);
+    setEntity(entity);
     const tokenExpirationDate = expirationDate || new Date(new Date().getTime() +1000 * 60 * 60);
     setTokenExpirationDate(tokenExpirationDate);
     localStorage.setItem("userData", JSON.stringify({userId : uid, token : tokenNew, expiration:tokenExpirationDate.toISOString()}));
@@ -25,6 +27,7 @@ function App() {
   const logout = useCallback(() => {
     setToken(false);
     setUserId(false);
+    setEntity(false);
     localStorage.removeItem("userData");
   }
   ,[]);
@@ -83,7 +86,9 @@ function App() {
         userId : userId,
         token : token,
         login:login, 
-        logout:logout}}>
+        logout:logout,
+        entity : entity
+        }}>
       <RouterProvider router = {router} />
     </AuthContext.Provider>
   );

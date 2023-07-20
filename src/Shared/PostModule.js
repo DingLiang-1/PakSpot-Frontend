@@ -26,6 +26,7 @@ function PostModule(props) {
                 eventFormClassName = {props.eventFormClassName}
                 />}
             <h3>{props.location}</h3>
+            <h6>{props.address}</h6>
             <MediaModule  
                 images = {props.images}
                 mediaClassName = {props.mediaClassName}

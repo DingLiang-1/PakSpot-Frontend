@@ -1,16 +1,53 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import "./PostPopup.css";
 import "./MediaPopup.css";
 import PostModule from "../Shared/PostModule.js";
 import PersonalPostPopupIcons from "./PersonalPostPopupIcons.js";
 import EditPost from "./EditPost.js";
+import { AuthContext } from "../Shared/AuthContext.js";
 
 function PostPopup(props) {
     let currentImageKeyAndLinks = [];
+    const auth = useContext(AuthContext);
+
+    function openDeleteNotifPopup() {
+        async function deleteEventReq() {
+            let response;
+            props.closeDeleteNotifPopup();
+            props.openLoadingPopup();
+            try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/deletepersonalpost/${auth.entity}/${auth.userId}`, {
+                method: "POST",
+                headers : {
+                "Content-Type" : "application/json",
+                "Authorization" : "Bearer " + (auth.token),
+                },
+                body: JSON.stringify({
+                    postId : props.post._id
+                })
+                });
+                if (response.ok) {
+                    props.closeLoadingPopup();
+                    props.setToGrid();
+                    props.refreshPage();
+                    await response.json().then(data => {props.openNotifPopup(data.message);});
+                    return;
+                } else {
+                    props.closeLoadingPopup();
+                    await response.json().then(error => {props.openNotifPopup(error.error);});
+                    return;
+                };
+            } catch(err) {
+                console.log("An error occurred, please try again");
+            };
+        };
+        props.openDeleteNotifPopup({message : "Please confirm delete!", handleDelete : deleteEventReq});
+    };
+
 
     function postIcons(toggle) {
         return (<PersonalPostPopupIcons
             toggleEditPostPopup = {props.toggleEditPostPopup}
+            openDeleteNotifPopup = {openDeleteNotifPopup}
         />);
     };
 
@@ -43,7 +80,7 @@ function PostPopup(props) {
             address = {props.post.address}
             postIcons = {postIcons}
         />)
-    );
+    )
 };
 
 export default PostPopup;

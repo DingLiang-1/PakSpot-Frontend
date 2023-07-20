@@ -13,6 +13,7 @@
     background-color:transparent;
     border-color: transparent;
     cursor: pointer;
+    color: white;
 }
 
 .postIcons .fa-solid.fa-heart {
@@ -20,5 +21,5 @@
 }
 
 .postIcons .fa-solid.fa-bookmark {
-    color:#020501dc;
+    color:white;
 }

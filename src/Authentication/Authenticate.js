@@ -15,6 +15,8 @@ function Authenticate() {
     const [isLoading, setIsLoading] = useState(false);
     const [notifMessage, setNotifMessage] = useState("");
     const [password, cachePassword] = useState("");
+    const [entity, setEntity] = useState("users");
+
     function closeNotifPopup(event) {
         setNotifPopup(false);
     };
@@ -34,12 +36,20 @@ function Authenticate() {
         updateAccountStatus(initial => !initial);
     };
 
+    function setEntityToUsers() {
+        setEntity(initial => ("users"));
+    };
+
+    function setEntityToBusinesses() {
+        setEntity(initial => ("businesses"));
+    };
+
     async function handleSubmit(event) {
         event.preventDefault();
         openLoadingPopup();
         let response;
         if (hasAccount) {
-            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + "/shared/auth/users/login"), {
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/${entity}/login`), {
                 method: "POST",
                 headers : {
                 "Content-Type" : "application/json"
@@ -52,7 +62,7 @@ function Authenticate() {
             if (response.ok) {
                 closeLoadingPopup();
                 await response.json().then(data => {
-                    auth.login(data.userId,data.token);
+                    auth.login(data.userId,data.token,entity);
                 });
                 return;
             } else {
@@ -66,7 +76,7 @@ function Authenticate() {
             return;
         };
         } else {
-            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + "/shared/auth/users/register"), {
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/${entity}/register`), {
                 method: "POST",
                 headers : {
                 "Content-Type" : "application/json"
@@ -105,22 +115,26 @@ useEffect(() => {
 
 return (
 <div className = "background-auth">
-    <div className="authForm">
-        <div className = "logo"><img src = {require("../Resources/Icons/appIcon.png")}/></div>
-        <form action = "/login" method = "POST">
-        {notifPopup && 
+    {notifPopup && 
             <Notification 
                 message = {notifMessage}
                 login = {false}
                 type = "message"
                 handleNotifPopup = {closeNotifPopup}
             />}
-        {isLoading && 
-            <Notification 
-                login = {false}
-                type = "loading"
-                handleNotifPopup = {closeNotifPopup}
-            />}
+    {isLoading && 
+        <Notification 
+            login = {false}
+            type = "loading"
+            handleNotifPopup = {closeNotifPopup}
+        />}
+    <div className="authForm">
+        <div className = "auth-entity-button-container">
+            <div className = {"auth-entity-button auth-entity-button-left" + (entity === "users" ? " auth-entity-selected" : "")} onClick = {setEntityToUsers}>User</div>
+            <div className = {"auth-entity-button auth-entity-button-right" + (entity === "businesses" ? " auth-entity-selected" : "")} onClick = {setEntityToBusinesses}>Business</div>
+        </div>
+        <div className = "logo"><img src = {require("../Resources/Icons/appIcon.png")}/></div>
+        <form action = "/login" method = "POST">
         {!hasAccount && 
         <Input 
             className="authInput"

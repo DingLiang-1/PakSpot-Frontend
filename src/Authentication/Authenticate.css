@@ -21,14 +21,50 @@
     background: #f1f7fe;
     display: flex;
     flex-direction: column;
-    border-radius: 30px;
+    border-radius: 15px;
     box-shadow: 0 0 2em #e6e9f9;
     gap: 2em;
     justify-content:center;
     align-items:center;
     width:450px;
-    height:75%;
-  }
+    height:70%;
+    position:relative;
+}
+
+.auth-entity-button-container {
+  width:100%;
+  height:45px;
+  position:absolute;
+  top:0px;
+  left:0px;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content: center;
+}
+
+.auth-entity-button {
+  width:50%;
+  height:100%;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content: center;
+}
+
+.auth-entity-button-left {
+  border-radius: 15px 0px 0px 0px;
+}
+.auth-entity-button-right {
+  border-radius: 0px 15px 0px 0px;
+}
+
+.auth-entity-selected {
+  background-color: rgb(204, 202, 202);
+  border-bottom: 3px solid blueviolet;
+}
+
+
 .authForm .logo {
     display:flex;
     flex-direction:column;

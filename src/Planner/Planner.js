@@ -122,15 +122,21 @@ function deleteEventNotifStateReducer(state,action) {
 };
 
 function Planner() {
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext);
     const todayDate = new Date();
     let todayDay = todayDate.getDay();
     let todayDateNumber = todayDate.getDate();
     let todayDateYear = todayDate.getFullYear();
     let todayDateMonth = todayDate.getMonth() + 1;
     const [dateState, dispatchDate] = useReducer(plannerReducer, {currentDateNumber : todayDateNumber, currentDateMonth : todayDateMonth, currentDateYear : todayDateYear });
-    
     const [eventUpdate, toggleEventUpdate] = useState(false);
+    const [loadedData, setLoadedData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [eventNotifState, dispatchEventNotifState] = useReducer(eventNotifReducer,{popup : false});
+    const [editEventFormState, dispatchEditEventForm] = useReducer(editEventFormReducer, {popup:false});
+    const [mapPopupState, dispatchMap] = useReducer(mapPopupReducer, {popup:false});
+    const [deleteEventNotifState, dispatchDeleteEventNotifState] = useReducer(deleteEventNotifStateReducer, {popup : false});
+
     function refreshPage() {
         toggleEventUpdate(initial => !initial);
     };
@@ -145,10 +151,6 @@ function Planner() {
     function handleDateUpdate(dateObj) {
         dispatchDate({type : "UPDATEDATE", dateInputs : {...dateObj}});
     };
-    
-    const [loadedData, setLoadedData] = useState([]);
-
-    const [isLoading, setIsLoading] = useState(true);
 
     function openLoadingPopup(event) {
         setIsLoading(true);
@@ -182,8 +184,6 @@ function Planner() {
             console.log("error");
         }}, [dateState.currentDateMonth,dateState.currentDateYear]);
 
-    const [eventNotifState, dispatchEventNotifState] = useReducer(eventNotifReducer,{popup : false});
-
     function openEventNotifPopup(message) {
         dispatchEventNotifState({type : "OPEN", message : message});
     };
@@ -194,9 +194,6 @@ function Planner() {
 
     useEffect(() => {scheduledEvents();}, [dateState.currentDateMonth, dateState.currentDateYear, eventUpdate]);
 
-
-    const [mapPopupState, dispatchMap] = useReducer(mapPopupReducer, {popup:false});
-
     function handleMapPopup(lat, lng, location, address) {
         dispatchMap({lat : lat, lng : lng, type : "POPUP", location : location, address :address});
     };
@@ -204,9 +201,6 @@ function Planner() {
     function closeMapPopup() {
         dispatchMap({type : "CLOSE"});
     };
-
-
-    const [editEventFormState, dispatchEditEventForm] = useReducer(editEventFormReducer, {popup:false});
 
     function toggleEditEventForm(id, eventDayId) {
         dispatchEditEventForm({id : id, eventDayId : eventDayId, type : "TOGGLE"});
@@ -217,8 +211,6 @@ function Planner() {
     };
 
     useEffect(() => {closeEditEventFormOnSubmit();}, [dateState.currentDateNumber]);
-
-    const [deleteEventNotifState, dispatchDeleteEventNotifState] = useReducer(deleteEventNotifStateReducer, {popup : false});
 
     function openDeleteEventNotif(eventId, eventDayId) {
         dispatchDeleteEventNotifState({type : "OPEN", eventDayId : eventDayId, eventId : eventId});
@@ -260,23 +252,23 @@ function Planner() {
     return (
     <div className = "planner">
         {eventNotifState.popup && <Notification
-                    login = {true}
-                    type = "eventNotification"
-                    message = {eventNotifState.message}
-                    handleNotifPopup = {closeEventNotifPopup}
-                />
+            login = {true}
+            type = "eventNotification"
+            message = {eventNotifState.message}
+            handleNotifPopup = {closeEventNotifPopup}
+        />
         }
         {isLoading && <Notification 
-                    login = {true}
-                    type = "loading"
-                />}
+            login = {true}
+            type = "loading"
+        />}
         {deleteEventNotifState.popup && <Notification
-                    login = {true}
-                    type = "confirmation"
-                    message = {deleteEventNotifState.message}
-                    handleDelete = {deleteEventReq}
-                    handleNotifPopup = {closeDeleteEventNotif}
-                />
+            login = {true}
+            type = "confirmation"
+            message = {deleteEventNotifState.message}
+            handleDelete = {deleteEventReq}
+            handleNotifPopup = {closeDeleteEventNotif}
+        />
         }
         {mapPopupState.popup ? (
             <MapPopup 
@@ -287,27 +279,27 @@ function Planner() {
                 closeMapPopup = {closeMapPopup}
             />) :
             (<Calendar 
-            currentDateYear = {dateState.currentDateYear}
-            currentDateMonth = {dateState.currentDateMonth}
-            currentDateNumber = {dateState.currentDateNumber}
-            handleYearUpdate = {handleYearUpdate}
-            handleMonthUpdate = {handleMonthUpdate}
-            handleDateUpdate = {handleDateUpdate}
-            eventDays = {loadedData.map(date => (date.day))}
+                currentDateYear = {dateState.currentDateYear}
+                currentDateMonth = {dateState.currentDateMonth}
+                currentDateNumber = {dateState.currentDateNumber}
+                handleYearUpdate = {handleYearUpdate}
+                handleMonthUpdate = {handleMonthUpdate}
+                handleDateUpdate = {handleDateUpdate}
+                eventDays = {loadedData.map(date => (date.day))}
             />)
         };
         {editEventFormState.popup && <EventForm 
-                closeOnSubmit = {closeEditEventFormOnSubmit}
-                eventId = {editEventFormState.id}
-                eventDayId = {editEventFormState.eventDayId}
-                type = "editEvent"
-                formHeader = "Edit Date"
-                eventFormClassName = "edit-event-form"
-                openLoadingPopup = {openLoadingPopup}
-                closeLoadingPopup = {closeLoadingPopup}
-                openEditEventNotifPopup = {openEventNotifPopup}
-                refreshPage = {refreshPage}
-                />}
+            closeOnSubmit = {closeEditEventFormOnSubmit}
+            eventId = {editEventFormState.id}
+            eventDayId = {editEventFormState.eventDayId}
+            type = "editEvent"
+            formHeader = "Edit Date"
+            eventFormClassName = "edit-event-form"
+            openLoadingPopup = {openLoadingPopup}
+            closeLoadingPopup = {closeLoadingPopup}
+            openEditEventNotifPopup = {openEventNotifPopup}
+            refreshPage = {refreshPage}
+        />}
 
 
         <Activities
@@ -318,7 +310,7 @@ function Planner() {
             toggleEditEventForm = {toggleEditEventForm}
             openDeleteEventNotif = {openDeleteEventNotif}
             eventDay = {loadedData.filter(docs => (docs.day === dateState.currentDateNumber.toString()))[0]}
-            />
+        />
     </div>
 )};
 

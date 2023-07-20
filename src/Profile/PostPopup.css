@@ -10,10 +10,18 @@
     padding-bottom:10px;
     color:white;
 }
-.post-popup > h3 {
+
+.post-popup  > h3 {
     font-family: Georgia, serif;
     align-self:flex-start;
-    margin-bottom:15px;
+    margin-bottom: 2px;
+}
+
+.post-popup  > h6 {
+    font-family: Georgia, serif;
+    align-self:flex-start;
+    margin-bottom:10px;
+    
 }
 
 .post-popup > p {

@@ -21,7 +21,7 @@ function PersonalPost(props) {
         async function getImages() {
             let response;
             try {
-                response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/personalpost/users/${auth.userId}`, {
+                response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/personalpost/${auth.entity}/${auth.userId}`, {
                         method: "GET",
                         headers : {
                             "Authorization" : ("Bearer " + auth.token)
@@ -89,6 +89,8 @@ function PersonalPost(props) {
                         editPostState = {editPostState}
                         refreshPage = {refreshPage}
                         setToGrid = {setToGrid}
+                        openDeleteNotifPopup = {props.openDeleteNotifPopup}
+                        closeDeleteNotifPopup = {props.closeDeleteNotifPopup}
                     />
                 </div>) 
             ));

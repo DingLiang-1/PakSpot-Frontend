@@ -30,6 +30,8 @@ function ProfilePost(props) {
                 closeLoadingPopup = {props.closeLoadingPopup}
                 openLoadingPopup = {props.openLoadingPopup}
                 openNotifPopup = {props.openNotifPopup}
+                openDeleteNotifPopup = {props.openDeleteNotifPopup}
+                closeDeleteNotifPopup = {props.closeDeleteNotifPopup}
             />}
             {postType === "BOOKMARKED" && <BookmarkPost 
                 closeLoadingPopup = {props.closeLoadingPopup}

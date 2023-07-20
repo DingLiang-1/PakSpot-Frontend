@@ -40,7 +40,7 @@ function EditPost(props) {
         formData.append("address", formState.inputs.address.value);
         formData.append("id", props.id);
         let response;
-        try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/editpersonalpost/users/${auth.userId}`, {
+        try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/editpersonalpost/${auth.entity}/${auth.userId}`, {
             method: "POST",
             headers : {
                 "Authorization" : ("Bearer " + auth.token)
