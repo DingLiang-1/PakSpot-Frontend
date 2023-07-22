@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import MediaModule from "./MediaModule.js";
 import EventForm from "./EventForm.js";
 import "./DefaultPostModule.css";
@@ -35,7 +36,14 @@ function PostModule(props) {
             <p>{props.description}</p>
             <div className = "post-tag-container">
                 {props.tags.map((tag,index) => {
-                    return (<div className = "post-tag" id = {index}>{"#" + tag}</div>);
+                    return (
+                    (props.searchPage) ? (
+                        <div className = "post-tag"><button type = "button" value = {tag}>{"#" + tag}</button></div>
+                    ) : (
+                    <Link id = {index} to = "/search" state = {tag} style={{ textDecoration: 'none' }}>
+                        <div className = "post-tag">{"#" + tag}</div>
+                    </Link>
+                    ));
                 })}
             </div>
         </div>

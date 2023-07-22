@@ -1,4 +1,5 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useRef, useEffect} from "react";
+import {useLocation} from "react-router-dom";
 import "./SearchPage.css";
 import useForm from "../Shared/FormHook.js";
 import Input from "../Shared/Input.js";
@@ -9,9 +10,10 @@ import { AuthContext } from "../Shared/AuthContext";
 
 function SearchPage() {
     const [searched, setSearched] = useState(false);
+    const location = useLocation();
     const [formState, handleOverallValidity] = useForm({
             searchBarInput : {
-                value : "",
+                value : ({...location}.state ? {...location}.state : ""),
                 isValid : false
             }
         }, false);
@@ -19,7 +21,20 @@ function SearchPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [notifPopup, setNotifPopup] = useState(false);
     const [notifMessage, setNotifMessage] = useState("");
+    const [locationStateDelay, setLocationStateDelay] = useState();
     const auth = useContext(AuthContext);
+
+    function tagSearch() {
+        submitQuery();
+    };
+
+    if (location.state) {
+        setLocationStateDelay({...location}.state);
+        location.state = false;
+    };
+    useEffect(() => {
+       tagSearch();
+    }, [locationStateDelay]);
 
     function openLoadingPopup() {
         setIsLoading(true);
@@ -35,9 +50,12 @@ function SearchPage() {
         />
     };
 
+
     async function submitQuery(event) {
-        event.preventDefault();
-        event.stopPropagation();
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        };
         openLoadingPopup();
         let response;
         try {
@@ -105,6 +123,7 @@ function SearchPage() {
                         ((value) => value.length > 0),
                     ]}
                     onInput = {handleOverallValidity}
+                    initialiseValue = {locationStateDelay}
                 />
                 <div className = "search-bar-submit-div">
                     <button type = "submit" disabled = {!formState.formValid}>SEARCH</button>
@@ -129,6 +148,7 @@ function SearchPage() {
                                     tags = {post.tags}
                                     formHeader = "Set Date"
                                     eventFormClassName = "feedEventFormPopup"
+                                    searchPage = {true}
                                 />
                             );
                         }
