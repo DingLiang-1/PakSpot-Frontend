@@ -55,6 +55,14 @@ function PostPopup(props) {
         currentImageKeyAndLinks.push({link : props.post.imageLinks[i], key : props.post.images[i]});
     };
 
+    function toStringTags(tags) {
+        let stringTag;
+        for (let i = 0; i < tags.length; i++) {
+            stringTag += ("#" + tags[i] + " ");
+        }
+        return stringTag;
+    };
+
     return (
         props.editPostState ? (
             <EditPost
@@ -64,6 +72,7 @@ function PostPopup(props) {
                 location = {props.post.location}
                 address = {props.post.address}
                 description = {props.post.description}
+                stringTag = {toStringTags(props.post.tags)}
                 id = {props.post._id}
                 currentImageKeyAndLinks = {currentImageKeyAndLinks}
                 closeEditPostPopup = {props.closeEditPostPopup}
@@ -79,6 +88,7 @@ function PostPopup(props) {
             description = {props.post.description}
             address = {props.post.address}
             postIcons = {postIcons}
+            tags = {props.post.tags}
         />)
     )
 };

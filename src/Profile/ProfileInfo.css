@@ -8,6 +8,48 @@
     align-items: center;
 }
 
+.profile-dropdown-container {
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items:center;
+    height: 40px;
+    width:100px;
+    right:20px;
+    top:20px;
+    overflow: hidden;
+}
+
+.profile-dropdown-true {
+    height: 120px;
+}
+
+.edit-profile-button {
+    height: 40px;
+    width:100px;
+    display:flex;
+    flex-direction:center;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color:black;
+}
+
+.edit-profile-button:hover {
+    background-color: rgb(118, 118, 248);
+}
+
+.profile-dropdown-icon {
+    width :100px;
+    height:40px;
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+    align-items: center;
+    color:white;
+}
+
 .profile-info {
     width:150px;
     height:105px;
@@ -47,4 +89,78 @@
     outline:none;
     border:none;
     border-radius:10px;
+}
+
+.edit-profile-form {
+    width:200px;
+    height:165px;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: center;
+    position:relative;
+}
+
+.edit-profile-info-preview.hide-input {
+    visibility: hidden;
+}
+
+.edit-profile-username {
+    width: 200px;
+    height:40px;
+    background-color: white;
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: left;
+    border-radius: 10px;
+}
+
+.edit-profile-username  input{
+    width: 80%;
+    height:25px;
+    background-color: white;
+    outline:none;
+    border:none;
+    margin-left:10px;
+}
+
+.edit-profile-username label {
+    font-size: 10px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+.edit-profile-submit-button {
+    background-color:transparent;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    height:25px;
+    width:60px;
+    border-radius: 10px;
+}
+
+.edit-profile-submit-button > button {
+    background-color: white;
+    border-radius:10px;
+    width:100%;
+    height:100%;
+    outline:none;
+    border:none;
+    font-size:15px;
+    font-family:"Poppins";
+}
+
+.edit-profile-submit-button > button:hover {
+    background-color: rgb(83, 83, 217);
+}
+
+.edit-profile-form-cross {
+    position:absolute;
+    top:20px;
+    right:20px;
+    color:white;
+   
 }

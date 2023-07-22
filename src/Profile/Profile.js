@@ -1,8 +1,9 @@
-import React , {useState, useReducer} from "react";
+import React , {useState, useReducer, useContext} from "react";
 import ProfileInfo from "./ProfileInfo.js";
 import ProfilePost from "./ProfilePost.js";
 import "./Profile.css";
 import Notification from "../Shared/Notification.js";
+import {AuthContext} from "../Shared/AuthContext.js"
 
 
 function deleteNotifPopupReducer(state, action) {
@@ -28,9 +29,10 @@ function deleteNotifPopupReducer(state, action) {
 
 function Profile() {
     const [notifPopup, setNotifPopup] = useState(false);
+    const [notifMessage, setNotifMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [deleteNotifPopup, dispatchDeleteNotifPopup] = useReducer(deleteNotifPopupReducer, {popup : false});
-    const [notifMessage, setNotifMessage] = useState("");
+    const auth = useContext(AuthContext);
 
     function closeNotifPopup(event) {
         setNotifPopup(false);
@@ -79,7 +81,13 @@ function Profile() {
                     handleDelete = {deleteNotifPopup.handleDelete}
                 />
             }
-            <ProfileInfo />
+            <ProfileInfo 
+                profilePicLink = {auth.profilePicLink}
+                username = {auth.username}
+                closeLoadingPopup = {closeLoadingPopup}
+                openLoadingPopup = {openLoadingPopup}
+                openNotifPopup = {openNotifPopup}
+            />
             <ProfilePost 
                 closeLoadingPopup = {closeLoadingPopup}
                 openLoadingPopup = {openLoadingPopup}

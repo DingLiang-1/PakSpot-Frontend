@@ -24,6 +24,10 @@ function Upload(props) {
         address : {
             value : "",
             isValid : false,
+        },
+        stringTag : {
+            value : "",
+            isValid : false,
         }
     },false);
     
@@ -37,6 +41,7 @@ function Upload(props) {
         formData.append("location", formState.inputs.location.value);
         formData.append("description", formState.inputs.description.value);
         formData.append("address", formState.inputs.address.value);
+        formData.append("stringTag", formState.inputs.stringTag.value);
         let response;
         try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/uploadpersonalpost/${auth.entity}/${auth.userId}`, {
             method: "POST",
@@ -109,7 +114,6 @@ function Upload(props) {
                 setPreviewURL(fileReader.result);
             };
             fileReader.readAsDataURL(imageFiles[sliderIndex]);
-            console.log("loaded");
         } else {
             return;
         };
@@ -182,6 +186,19 @@ function Upload(props) {
                 ]}
                 onInput = {handleOverallValidity}
             />
+            <Input 
+                className = "personal-upload-description"
+                id = "stringTag"
+                label = "Tags"
+                type = "textarea"
+                inputType = "text"
+                placeholder = "e.g. #dinner #east #dinner" 
+                errorAlert = "Required field"
+                validators = {[ 
+                ]}
+                onInput = {handleOverallValidity}
+            />
+
             <div className = "upload-submit-button">
                 <button type = "submit" disabled = {!formState.formValid || !imageFiles.length}>Submit</button>
             </div>

@@ -4,12 +4,11 @@ import "./Calendar.css";
 function Calendar(props) {
     
     function handleYearUpdate(event) {
-        props.handleYearUpdate(event.target.value);
-    
+        props.handleYearUpdate(parseInt(event.target.value));
     };
 
     function handleMonthUpdate(event) {
-        props.handleMonthUpdate(event.target.value);
+        props.handleMonthUpdate(parseInt(event.target.value));
     };
     
     function handleDateUpdate(event) {
@@ -65,11 +64,10 @@ function Calendar(props) {
 
     return (
     <div className = "calendar">
-        <select id = "calendar-year" onChange = {handleYearUpdate} defaultValue= {props.currentDateYear}>
+        <select id = "calendar-year" onChange = {handleYearUpdate} value= {props.currentDateYear}>
             {Array.from({ length: 100 }, (value, index) => ((new Date().getFullYear() - 50) + index)).map((year) => (<option value = {year} >{year}</option>))}
         </select>
-        {/*<input id = "calendar-year" onChange = {handleYearUpdate} value = {props.currentDateYear} placeholder = "YYYY"/> */}
-        <select id = "calendar-month" onChange = {handleMonthUpdate} defaultValue = {props.currentDateMonth}>
+        <select id = "calendar-month" onChange = {handleMonthUpdate} value = {props.currentDateMonth}>
             {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month,index) => <option value = {index + 1} >{month}</option>)}
         </select>
         <div className = "calendar-grid">

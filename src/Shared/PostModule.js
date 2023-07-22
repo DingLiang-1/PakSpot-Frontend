@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MediaModule from "./MediaModule.js";
 import EventForm from "./EventForm.js";
-
+import "./DefaultPostModule.css";
 
 
 function PostModule(props) {
@@ -33,6 +33,11 @@ function PostModule(props) {
                 postIcons = {props.postIcons(togglePopup)}
             />
             <p>{props.description}</p>
+            <div className = "post-tag-container">
+                {props.tags.map((tag,index) => {
+                    return (<div className = "post-tag" id = {index}>{"#" + tag}</div>);
+                })}
+            </div>
         </div>
     );
 };

@@ -24,6 +24,10 @@ function EditPost(props) {
         address : {
             value : props.address,
             isValid : true,
+        },
+        stringTag : {
+            value : props.stringTag,
+            isValid : true,
         }
     },false);
     
@@ -39,6 +43,7 @@ function EditPost(props) {
         formData.append("description", formState.inputs.description.value);
         formData.append("address", formState.inputs.address.value);
         formData.append("id", props.id);
+        formData.append("stringTag", formState.inputs.stringTag.value )
         let response;
         try { response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/editpersonalpost/${auth.entity}/${auth.userId}`, {
             method: "POST",
@@ -139,7 +144,7 @@ function EditPost(props) {
                 {imageFiles.length + currentImageKeyAndLinks.length ?  (
                     <React.Fragment>
                         <i className = "fa-solid fa-chevron-left fa-1x" onClick = {slideImageLeft}></i>
-                        <img src = {previewURL}></img>
+                        <img src = {previewURL} />
                         <i className = "fa-solid fa-chevron-left fa-rotate-180 fa-1x" onClick = {slideImageRight}></i>
                     </React.Fragment>) :
                     <img src = {require("../Resources/Icons/NoImage.png")} />
@@ -201,6 +206,20 @@ function EditPost(props) {
                 ]}
                 onInput = {handleOverallValidity}
                 initialiseValue = {props.description}
+            />
+
+            <Input 
+                className = "personal-upload-description"
+                id = "stringTag"
+                label = "Tags"
+                type = "textarea"
+                inputType = "text"
+                placeholder = "e.g. #dinner #east #dinner" 
+                errorAlert = "Required field"
+                validators = {[ 
+                ]}
+                onInput = {handleOverallValidity}
+                initialiseValue = {props.stringTag}
             />
             <div className = "upload-submit-button">
                 <button type = "submit" disabled = {!formState.formValid || !(imageFiles.length + currentImageKeyAndLinks.length)}>Submit</button>

@@ -14,12 +14,9 @@ function Sidebar() {
                 <Link to = "/">
                     <button type = "submit"><li className="icon fa fa-home" id="uno"></li></button>
                 </Link>
-                <form action = "/searchIcon" method = "post">
+                <Link to = "/search">
                     <button type = "submit"><li className="icon fa fa-compass" id="dos"></li></button>
-                </form>
-                {/*<form action = "/postIcon" method = "post">
-                    <button type = "submit"><li className="icon fa fa-plus-square-o" id="tres"></li></button>
-                </form>*/}
+                </Link>
                 <Link to = "/planner">
                     <button type = "submit"><li className="icon fa fa-calendar-o" id="cuatro"></li></button>
                 </Link>

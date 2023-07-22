@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PostModule from "../Shared/PostModule.js";
 import "./Feed.css";
-import "./Media.css";
-import "./Post.css";
 import { AuthContext } from "../Shared/AuthContext.js";
 import Notification from "../Shared/Notification.js";
 import PostIcons from "./PostIcons.js";
@@ -73,6 +71,7 @@ function Feed() {
                     description = {post.description}
                     address = {post.address}
                     postIcons = {postIcons}
+                    tags = {post.tags}
                     formHeader = "Set Date"
                     eventFormClassName = "feedEventFormPopup"
                 />

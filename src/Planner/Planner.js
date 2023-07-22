@@ -176,9 +176,10 @@ function Planner() {
             if (response.ok) {
                 await response.json().then(data => setLoadedData(data.events));
                 closeLoadingPopup();
+
                 return;
             } else {
-                console.log("an error occured");
+                console.log(auth);
             }
         } catch(err) {
             console.log("error");

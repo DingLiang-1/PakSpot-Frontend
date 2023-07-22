@@ -62,7 +62,7 @@ function Authenticate() {
             if (response.ok) {
                 closeLoadingPopup();
                 await response.json().then(data => {
-                    auth.login(data.userId,data.token,entity);
+                    auth.login(data.userId,data.token,entity, data.username, data.profilePicLink);
                 });
                 return;
             } else {
@@ -130,8 +130,8 @@ return (
         />}
     <div className="authForm">
         <div className = "auth-entity-button-container">
-            <div className = {"auth-entity-button auth-entity-button-left" + (entity === "users" ? " auth-entity-selected" : "")} onClick = {setEntityToUsers}>User</div>
-            <div className = {"auth-entity-button auth-entity-button-right" + (entity === "businesses" ? " auth-entity-selected" : "")} onClick = {setEntityToBusinesses}>Business</div>
+            <div className = {"auth-entity-button auth-entity-button-left" + (entity === "users" ? " auth-entity-selected" : "")} onClick = {setEntityToUsers}>USER</div>
+            <div className = {"auth-entity-button auth-entity-button-right" + (entity === "businesses" ? " auth-entity-selected" : "")} onClick = {setEntityToBusinesses}>BUSINESS</div>
         </div>
         <div className = "logo"><img src = {require("../Resources/Icons/appIcon.png")}/></div>
         <form action = "/login" method = "POST">

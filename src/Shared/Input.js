@@ -46,11 +46,12 @@ function Input(props) {
 
     return (
         <div className = {props.className + ((inputState.isTouched) ? (((!inputState.isValid) ? " input-error" : "")) : "") + (props.hide ? " hide-input" : "")}>
-            <label htmlFor = {props.id}>{props.label}</label>
+            {props.label && <label htmlFor = {props.id}>{props.label}</label>}
             {(props.type === "textarea") ? 
                 <textarea
                     id = {props.id}
                     type = {props.inputType}
+                    autocomplete = "off"
                     placeholder = {props.placeholder}
                     rows = {props.rows}
                     value = {inputState.value}
@@ -61,6 +62,7 @@ function Input(props) {
                 <input
                     id = {props.id}
                     type = {props.inputType}
+                    autocomplete = "off"
                     placeholder = {props.placeholder}
                     value = {inputState.value}
                     onChange = {handleChange}
