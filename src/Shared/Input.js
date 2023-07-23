@@ -26,14 +26,20 @@ function inputReducer(state, action) {
 
 
 function Input(props) {
-    const [inputState, dispatch] = useReducer(inputReducer, {isTouched:false, value: (props.initialiseValue || ""), isValid: (props.initialiseValue ? true : false)})
-
+    const [inputState, dispatch] = useReducer(inputReducer, {isTouched: (props.initialiseValue ? true : false), value: (props.initialiseValue || ""), isValid: (props.initialiseValue ? true : false)})
     const {isValid, value} = inputState;
     const {onInput, id} = props;
 
     useEffect(() => {
         onInput(id, value, isValid);
     }, [onInput, id, isValid, value]);
+
+    useEffect(() => {
+        if (props.updateInputValue) {
+            dispatch({type:"CHANGE", val:props.updateInputValue, validators:props.validators});
+        };
+    },[props.updateInputValue]);
+ 
 
     function handleChange(event) {
         dispatch({type:"CHANGE", val:event.target.value, validators:props.validators});
@@ -51,7 +57,7 @@ function Input(props) {
                 <textarea
                     id = {props.id}
                     type = {props.inputType}
-                    autocomplete = "off"
+                    autoComplete = "off"
                     placeholder = {props.placeholder}
                     rows = {props.rows}
                     value = {inputState.value}
@@ -62,7 +68,7 @@ function Input(props) {
                 <input
                     id = {props.id}
                     type = {props.inputType}
-                    autocomplete = "off"
+                    autoComplete = "off"
                     placeholder = {props.placeholder}
                     value = {inputState.value}
                     onChange = {handleChange}

@@ -16,6 +16,8 @@ function Authenticate() {
     const [notifMessage, setNotifMessage] = useState("");
     const [password, cachePassword] = useState("");
     const [entity, setEntity] = useState("users");
+    const [forgetPassword, setForgetPasswordState] = useState(false);
+    const [verified, setVerified] = useState(false);
 
     function closeNotifPopup(event) {
         setNotifPopup(false);
@@ -32,8 +34,11 @@ function Authenticate() {
         setIsLoading(false);
     };
     
-    function handleAccountStatus(event) {
+    function handleAccountStatus() {
         updateAccountStatus(initial => !initial);
+        setForgetPasswordState(false);
+        setVerified(false);
+        removeInputs(["reEnterPassword","verificationCode","password"]);
     };
 
     function setEntityToUsers() {
@@ -44,12 +49,76 @@ function Authenticate() {
         setEntity(initial => ("businesses"));
     };
 
+    function setForgetPassword() {
+        setForgetPasswordState(true);
+        removeInputs(["password"]);
+        updateAccountStatus(true);
+    };
+
     async function handleSubmit(event) {
         event.preventDefault();
         openLoadingPopup();
         let response;
-        if (hasAccount) {
-            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/${entity}/login`), {
+        if (forgetPassword && !verified) {
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/matchverificationcode/${entity}/`), {
+                    method: "POST",
+                    headers : {
+                    "Content-Type" : "application/json"
+                    },
+                    body: JSON.stringify({
+                        email : formState.inputs.email.value,
+                        verificationCode : formState.inputs.verificationCode.value
+                    })
+                });
+                if (response.ok) {
+                    closeLoadingPopup();
+                    setVerified(true);
+                    return;
+                } else {
+                    closeLoadingPopup();
+                    await response.json().then(err => {openNotifPopup(err.error);});
+                    return;
+                };
+            } catch(err) {
+                closeLoadingPopup();
+                openNotifPopup("An unknown error occurred, please try again!");
+                return;
+            };
+            
+        } else if (forgetPassword && verified) {
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/resetpassword/${entity}`), {
+                    method: "POST",
+                    headers : {
+                    "Content-Type" : "application/json"
+                    },
+                    body: JSON.stringify({
+                        email : formState.inputs.email.value,
+                        password : formState.inputs.password.value,
+                        verificationCode : formState.inputs.verificationCode.value
+                    })
+                });
+                if (response.ok) {
+                    closeLoadingPopup();
+                    await response.json().then(message => {
+                        openNotifPopup(message.message);
+                    });
+                    setForgetPasswordState(false);
+                    setVerified(false);
+                    removeInputs(["reEnterPassword","verificationCode"]);
+                    updateAccountStatus(true);
+                    return;
+                } else {
+                    closeLoadingPopup();
+                    await response.json().then(err => {openNotifPopup(err.error);});
+                    return;
+                };
+            } catch(err) {
+                closeLoadingPopup();
+                openNotifPopup("An unknown error occurred, please try again!");
+                return;
+            };
+        } else if (hasAccount) {
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/login/${entity}`), {
                 method: "POST",
                 headers : {
                 "Content-Type" : "application/json"
@@ -62,12 +131,12 @@ function Authenticate() {
             if (response.ok) {
                 closeLoadingPopup();
                 await response.json().then(data => {
-                    auth.login(data.userId,data.token,entity, data.username, data.profilePicLink);
+                    auth.login(data.userId,data.token,entity);
                 });
                 return;
             } else {
                 closeLoadingPopup();
-                response.json().then(err => {openNotifPopup(err.error);});
+                await response.json().then(err => {openNotifPopup(err.error);});
                 return;
             };
         } catch(err) {
@@ -76,7 +145,7 @@ function Authenticate() {
             return;
         };
         } else {
-            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/${entity}/register`), {
+            try { response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/register/${entity}`), {
                 method: "POST",
                 headers : {
                 "Content-Type" : "application/json"
@@ -86,41 +155,68 @@ function Authenticate() {
                     email : formState.inputs.email.value,
                     password : formState.inputs.password.value
                 })
-            });
-            if (response.ok) {
-                closeLoadingPopup();
-                removeInputs(["username", "reEnterPassword"]);
-                response.json().then(res => {openNotifPopup(res.message);})
-                updateAccountStatus(initial => !initial);
-                return;
-            } else {
-                closeLoadingPopup();
-                response.json().then(err => {openNotifPopup(err.error);});
-                return;
-            };
+                });
+                if (response.ok) {
+                    closeLoadingPopup();
+                    removeInputs(["username", "reEnterPassword"]);
+                    updateAccountStatus(true);
+                    await response.json().then(res => {openNotifPopup(res.message);});
+                    return;
+                } else {
+                    closeLoadingPopup();
+                    await response.json().then(err => {openNotifPopup(err.error);});
+                    return;
+                };
             } catch(err) {
                 closeLoadingPopup();
-                openNotifPopup("Unknown error occurred, please try again!");
+                openNotifPopup("123Unknown error occurred, please try again!");
                 return;
             };
         };
     };
 
-useEffect(() => {   
-    if (hasAccount) {
-        removeInputs(["username", "reEnterPassword"]);
-    };},
-    [removeInputs, hasAccount]);
-    
+    async function sendVerificationCode() {
+        openLoadingPopup();
+        let response;
+        if (hasAccount) {
+            try { 
+                response = await fetch((process.env.REACT_APP_BACKEND_URL + `/shared/auth/getverificationcode/${entity}/${formState.inputs.email.value}`), {
+                    method: "GET",
+                    headers : {
+                    "Content-Type" : "application/json"}
+                });
+            if (response.ok) {
+                closeLoadingPopup();
+                await response.json().then(message => {openNotifPopup(message.message);});
+                return;
+            } else {
+                closeLoadingPopup();
+                await response.json().then(err => {openNotifPopup(err.error);});
+                return;
+            };
+            } catch(err) {
+                closeLoadingPopup();
+                openNotifPopup("An unknown error occurred, please try again!");
+                return;
+            };
+        };
+    };
 
-return (
-<div className = "background-auth">
-    {notifPopup && 
-            <Notification 
-                message = {notifMessage}
-                login = {false}
-                type = "message"
-                handleNotifPopup = {closeNotifPopup}
+    useEffect(() => {   
+        if (hasAccount) {
+            removeInputs(["username", "reEnterPassword"]);
+        };
+    },[removeInputs, hasAccount]);
+        
+
+    return (
+    <div className = "background-auth">
+        {notifPopup && 
+                <Notification 
+                    message = {notifMessage}
+                    login = {false}
+                    type = "message"
+                    handleNotifPopup = {closeNotifPopup}
             />}
     {isLoading && 
         <Notification 
@@ -163,21 +259,43 @@ return (
             ]}
             onInput = {handleOverallValidity}
         />
-        <Input 
-            className="authInput"
-            id = "password"
-            type = "input"
-            label = "Password"
-            inputType="password" 
-            placeholder="Password"
-            errorAlert = "Password needs to have at least 8 characters"
-            validators = {[
-                ((value) => value.length >= 8)
-            ]}
-            onInput = {handleOverallValidity}
-            cachePassword = {cachePassword}
-        />
-        {!hasAccount && 
+        {(forgetPassword && !verified) && (
+            <div className = "verification-code-input-container">
+                <Input 
+                    className="verification-code-input"
+                    id = "verificationCode"
+                    type = "input"
+                    label = "Enter Verification Code"
+                    inputType="text" 
+                    placeholder="Verification Code"
+                    errorAlert = "Please enter the verification code"
+                    validators = {[
+                        ((value) => value.length > 0)
+                    ]}
+                    onInput = {handleOverallValidity}
+                />
+                <div className = "send-verification-code-div">
+                    <button type = "button" disabled = {!formState.inputs.email.value.length} onClick = {sendVerificationCode}>SEND CODE</button>
+                </div>
+            </div>
+        )}
+        {(!forgetPassword || verified) && (
+            <Input 
+                className="authInput"
+                id = "password"
+                type = "input"
+                label = "Password"
+                inputType="password" 
+                placeholder="Password"
+                errorAlert = "Password needs to have at least 8 characters"
+                validators = {[
+                    ((value) => value.length >= 8)
+                ]}
+                onInput = {handleOverallValidity}
+                cachePassword = {cachePassword}
+            />
+        )}
+        {(!hasAccount || verified) && 
         <Input 
             className="authInput"
             id = "reEnterPassword"
@@ -191,14 +309,16 @@ return (
             ]}
             onInput = {handleOverallValidity}
         />}
-            <button type = "submit" className={"login" + (!formState.formValid ? " buttonDisable" : "")} disabled = {!formState.formValid} onClick = {handleSubmit}>{hasAccount ? "Login" : "Signup"}</button>
+            <button type = "submit" className={"login" + (!formState.formValid ? " buttonDisable" : "")} disabled = {!formState.formValid} onClick = {handleSubmit}>{(forgetPassword && !verified) ? "Send" : ((forgetPassword && verified ? "Reset" : (hasAccount) ? "Login" : "Register"))}</button>
         </form>
-        <form action = "/noAccount" method = "POST">
-            <div className="footer"><button type = "button" onClick = {handleAccountStatus}>{hasAccount ? "Don't have an account? Signup" : "Have an account? Login"}</button>{hasAccount && <span>Forgot Password?</span>}</div>
-        </form>
+        <div className="footer">
+            <button type = "button" onClick = {handleAccountStatus}>{hasAccount ? "Don't have an account? Signup" : "Have an account? Login"}</button>
+            {hasAccount && <button type = "button" onClick = {setForgetPassword}>Forgot Password?</button>}
+        </div>
     </div>
-</div> 
+    </div> 
 );
 };
 
 export default Authenticate;
+

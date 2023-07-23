@@ -54,7 +54,6 @@ function formReducer(state, action) {
 };
 
 function useForm(initialInputs, initialValidity) {
-
     const [formState, dispatch] = useReducer(formReducer, {
         inputs: {
             ...initialInputs

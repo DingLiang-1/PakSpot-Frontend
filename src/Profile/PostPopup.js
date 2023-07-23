@@ -5,6 +5,7 @@ import PostModule from "../Shared/PostModule.js";
 import PersonalPostPopupIcons from "./PersonalPostPopupIcons.js";
 import EditPost from "./EditPost.js";
 import { AuthContext } from "../Shared/AuthContext.js";
+import PostIcons from "../Feed/PostIcons.js";
 
 function PostPopup(props) {
     let currentImageKeyAndLinks = [];
@@ -44,11 +45,21 @@ function PostPopup(props) {
     };
 
 
-    function postIcons(toggle) {
+    function postIconsPersonal(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
         return (<PersonalPostPopupIcons
             toggleEditPostPopup = {props.toggleEditPostPopup}
             openDeleteNotifPopup = {openDeleteNotifPopup}
         />);
+    };
+
+    function postIconsBookmark(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
+        return <PostIcons 
+            toggleEventForm = {toggleEventForm}
+            openLoadingPopup = {openLoadingPopup}
+            closeLoadingPopup = {closeLoadingPopup}
+            bookmarked = {bookmarked}
+            postId = {postId}
+        />
     };
 
     for (let i = 0; i < props.post.imageLinks.length; i++) {
@@ -81,14 +92,16 @@ function PostPopup(props) {
             />) :
         (<PostModule 
             form = {false}
-            postClassName = "post-popup"
-            mediaClassName = "media-popup"
+            postClassName = "post"
+            mediaClassName = "media"
             location = {props.post.location}
             images = {props.post.imageLinks}
             description = {props.post.description}
             address = {props.post.address}
-            postIcons = {postIcons}
+            postIcons = {props.bookmarkState ? postIconsBookmark : postIconsPersonal}
             tags = {props.post.tags}
+            bookmarked = {props.post.bookmarked}
+            postId = {props.post._id}
         />)
     )
 };

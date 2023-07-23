@@ -16,12 +16,13 @@ function Feed() {
         setIsLoading(false);
     };
     const auth = useContext(AuthContext);
+
     useEffect(() => {
         openLoadingPopup();
         async function getImages() {
             let response;
             try {
-                response = await fetch(process.env.REACT_APP_BACKEND_URL + "/shared/feed", {
+                response = await fetch(process.env.REACT_APP_BACKEND_URL + `/shared/feed/${auth.entity}/${auth.userId}`, {
                         method: "GET",
                         headers : {
                             "Authorization" : ("Bearer " + auth.token)
@@ -46,9 +47,13 @@ function Feed() {
         getImages();
     }, []);
 
-    function postIcons(toggle) {
+    function postIcons(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
         return <PostIcons 
-            togglePopup = {toggle}
+            toggleEventForm = {toggleEventForm}
+            openLoadingPopup = {openLoadingPopup}
+            closeLoadingPopup = {closeLoadingPopup}
+            bookmarked = {bookmarked}
+            postId = {postId}
         />
     };
 
@@ -74,6 +79,8 @@ function Feed() {
                     tags = {post.tags}
                     formHeader = "Set Date"
                     eventFormClassName = "feedEventFormPopup"
+                    bookmarked = {post.bookmarked}
+                    postId = {post._id}
                 />
                 )})}
         </div>

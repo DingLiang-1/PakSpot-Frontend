@@ -10,6 +10,13 @@ import { AuthContext } from "../Shared/AuthContext";
 
 function SearchPage() {
     const [searched, setSearched] = useState(false);
+    const [loadedData, setLoadedData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [notifPopup, setNotifPopup] = useState(false);
+    const [notifMessage, setNotifMessage] = useState("");
+    const [tagSearchQuery, setTagSearchQuery] = useState();
+    const [locationStateDelay, setLocationStateDelay] = useState();
+    const auth = useContext(AuthContext);
     const location = useLocation();
     const [formState, handleOverallValidity] = useForm({
             searchBarInput : {
@@ -17,24 +24,24 @@ function SearchPage() {
                 isValid : false
             }
         }, false);
-    const [loadedData, setLoadedData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [notifPopup, setNotifPopup] = useState(false);
-    const [notifMessage, setNotifMessage] = useState("");
-    const [locationStateDelay, setLocationStateDelay] = useState();
-    const auth = useContext(AuthContext);
-
-    function tagSearch() {
-        submitQuery();
+    function updateTagSearch(event) {
+        setTagSearchQuery(event.target.value);
+        handleOverallValidity("searchBarInput", event.target.value, true);
     };
 
     if (location.state) {
         setLocationStateDelay({...location}.state);
+        setSearched(true);
         location.state = false;
     };
+  
     useEffect(() => {
-       tagSearch();
-    }, [locationStateDelay]);
+        console.log("run");
+        if (searched) {
+            submitQuery();
+        };
+    }, [tagSearchQuery, locationStateDelay]);
+    
 
     function openLoadingPopup() {
         setIsLoading(true);
@@ -123,7 +130,7 @@ function SearchPage() {
                         ((value) => value.length > 0),
                     ]}
                     onInput = {handleOverallValidity}
-                    initialiseValue = {locationStateDelay}
+                    updateInputValue = {tagSearchQuery ? tagSearchQuery : locationStateDelay}
                 />
                 <div className = "search-bar-submit-div">
                     <button type = "submit" disabled = {!formState.formValid}>SEARCH</button>
@@ -149,11 +156,14 @@ function SearchPage() {
                                     formHeader = "Set Date"
                                     eventFormClassName = "feedEventFormPopup"
                                     searchPage = {true}
+                                    updateTagSearch = {updateTagSearch}
                                 />
                             );
                         }
                     ) : (
-                        (<div className = "empty-search-return">Sorry there are no post based on your query</div>)
+                        (<div className = "empty-search-return">
+                            <h3>NO POST FOUND</h3>
+                        </div>)
                     )}
                 </div>
             ) : (

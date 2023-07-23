@@ -19,7 +19,7 @@ function ProfileInfo(props) {
     const previewRef = useRef();
     const [imageFile, updateImageFile] = useState();
     const [imagePreviewUrl, setImagePreviewUrl] = useState();
-    const [formState, handleOverallValidity] = useForm({
+    const [formState, handleOverallValidity] = useForm({    
         editProfileUsername : {
             value : profileInfo.username,
             isValid : true,
@@ -155,7 +155,7 @@ function ProfileInfo(props) {
         :(
         <React.Fragment>
             <div className = {"profile-dropdown-container" + (dropdownState ? " profile-dropdown-true" : "")}>
-                <div className = "profile-dropdown-icon"><i className= "fa-solid fa-ellipsis-vertical fa-2x" onClick = {toggleDropdown}></i></div>
+                <div className = "profile-dropdown-icon" onClick = {toggleDropdown}><i className= "fa-solid fa-ellipsis-vertical fa-2x"></i></div>
                 {dropdownState &&
                 <React.Fragment>
                     <Link to = "/" style={{ textDecoration: 'none' }}>

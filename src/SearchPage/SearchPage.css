@@ -95,5 +95,15 @@
     margin-top:50px;
 }
 
+.empty-search-return {
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    height:100%;
+    width:100%;
+    color:white;
+    margin-top:50px;
+}
 
 
