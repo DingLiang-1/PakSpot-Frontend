@@ -67,7 +67,7 @@ function PostPopup(props) {
     };
 
     function toStringTags(tags) {
-        let stringTag;
+        let stringTag = "";
         for (let i = 0; i < tags.length; i++) {
             stringTag += ("#" + tags[i] + " ");
         }

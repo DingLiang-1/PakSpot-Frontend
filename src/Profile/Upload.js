@@ -193,7 +193,7 @@ function Upload(props) {
                 type = "textarea"
                 inputType = "text"
                 placeholder = "e.g. #dinner #east #dinner" 
-                errorAlert = "Required field"
+                errorAlert = ""
                 validators = {[ 
                 ]}
                 onInput = {handleOverallValidity}
