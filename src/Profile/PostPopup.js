@@ -94,6 +94,8 @@ function PostPopup(props) {
             form = {props.bookmarkState}
             postClassName = "post"
             mediaClassName = "media"
+            formHeader = "Set Date"
+            eventFormClassName = "feedEventFormPopupBookmark"
             location = {props.post.location}
             images = {props.post.imageLinks}
             description = {props.post.description}

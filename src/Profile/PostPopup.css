@@ -32,3 +32,12 @@
     text-justify:auto;
     margin-top: 10px;
 }
+
+.feedEventFormPopupBookmark {
+    position:fixed;
+    right:50px;
+    bottom:10px;
+    width:300px;
+    height:300px;
+    z-index:2;
+}
