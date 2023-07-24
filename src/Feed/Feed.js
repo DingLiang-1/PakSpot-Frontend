@@ -39,7 +39,7 @@ function Feed() {
                     return;
             };
             await response.json().then(FeedArray => {
-                setBusinessFeed(FeedArray);
+                setBusinessFeed(FeedArray.reverse());
             });
             closeLoadingPopup();
             return;

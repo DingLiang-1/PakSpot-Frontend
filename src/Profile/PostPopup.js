@@ -91,7 +91,7 @@ function PostPopup(props) {
                 setToGrid = {props.setToGrid}
             />) :
         (<PostModule 
-            form = {false}
+            form = {props.bookmarkState}
             postClassName = "post"
             mediaClassName = "media"
             location = {props.post.location}
