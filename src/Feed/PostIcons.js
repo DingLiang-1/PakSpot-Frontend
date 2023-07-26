@@ -10,6 +10,7 @@ function PostIcons(props) {
     const [bookmark, bookmarked] = useState(props.bookmarked);
     const auth = useContext(AuthContext);
 
+    //placeholder function, remove this with update "like" function
     function toggleLike() {
         liked(!like);
         return;
@@ -28,7 +29,7 @@ function PostIcons(props) {
                     postId : props.postId,
                     bookmarked : !bookmark
                 })
-                });
+            });
             if (response.ok) {
                 props.closeLoadingPopup();
                 bookmarked(!bookmark);

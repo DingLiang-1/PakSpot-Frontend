@@ -1,10 +1,10 @@
 import React, {useState, useContext, useEffect} from "react";
-import "./PersonalPost.css";
+import "./PersonalUpload.css";
 import PostPopup from "./PostPopup.js";
 import { AuthContext } from "../Shared/AuthContext";
 
 
-function PersonalPost(props) {
+function PersonalUpload(props) {
     const [gridFormatPersonal, setGridFormatPersonal] = useState(true);
     const [gridFormatBookmark, setGridFormatBookmark] = useState(true);
     const [personalPost, setPersonalPost] = useState([]);
@@ -136,6 +136,7 @@ function PersonalPost(props) {
                         openDeleteNotifPopup = {props.openDeleteNotifPopup}
                         closeDeleteNotifPopup = {props.closeDeleteNotifPopup}
                         bookmarkState = {props.bookmarkState}
+                        searchPage = {true}
                     />
                 </div>) 
             ));
@@ -144,6 +145,6 @@ function PersonalPost(props) {
     };
 };
 
-export default PersonalPost;
+export default PersonalUpload;
 
 

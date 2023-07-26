@@ -1,8 +1,7 @@
 import React, {useState, useContext} from "react";
 import "./PostPopup.css";
-import "./MediaPopup.css";
 import PostModule from "../Shared/PostModule.js";
-import PersonalPostPopupIcons from "./PersonalPostPopupIcons.js";
+import PersonalUploadIcons from "./PersonalUploadIcons.js";
 import EditPost from "./EditPost.js";
 import { AuthContext } from "../Shared/AuthContext.js";
 import PostIcons from "../Feed/PostIcons.js";
@@ -46,12 +45,13 @@ function PostPopup(props) {
 
 
     function postIconsPersonal(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
-        return (<PersonalPostPopupIcons
+        return (<PersonalUploadIcons
             toggleEditPostPopup = {props.toggleEditPostPopup}
             openDeleteNotifPopup = {openDeleteNotifPopup}
         />);
     };
 
+    //function to add variables and functions from PostModule into PostIcons going inside the PostModule
     function postIconsBookmark(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
         return <PostIcons 
             toggleEventForm = {toggleEventForm}
@@ -104,6 +104,7 @@ function PostPopup(props) {
             tags = {props.post.tags}
             bookmarked = {props.post.bookmarked}
             postId = {props.post._id}
+            searchPage = {props.searchPage}
         />)
     )
 };

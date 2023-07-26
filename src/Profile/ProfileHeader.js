@@ -1,5 +1,5 @@
 import React, {useContext, useReducer, useState, useEffect, useRef} from "react";
-import "./ProfileInfo.css";
+import "./ProfileHeader.css";
 import { AuthContext } from "../Shared/AuthContext";
 import {Link} from "react-router-dom";
 import Input from "../Shared/Input.js";
@@ -10,7 +10,7 @@ function profileInfoReducer(state, action) {
     return action;
 };
 
-function ProfileInfo(props) {
+function ProfileHeader(props) {
     const auth = useContext(AuthContext);
     const [profileInfo, dispatchProfileInfo] = useReducer(profileInfoReducer, {profilePicLink:'' , username :''});
     const [refreshProfile, setRefreshProfile] = useState(false);
@@ -173,4 +173,4 @@ function ProfileInfo(props) {
     </div>);
 };
 
-export default ProfileInfo;
+export default ProfileHeader;

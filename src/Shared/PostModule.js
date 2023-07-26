@@ -34,11 +34,11 @@ function PostModule(props) {
                 type = {props.type}
                 formHeader = {props.formHeader}
                 eventFormClassName = {props.eventFormClassName}
-                />}
+            />}
             {isLoading && <Notification 
                     login = {true}
                     type = "loading"
-                />}
+            />}
             <h3>{props.location}</h3>
             <h6>{props.address}</h6>
             <MediaModule  
@@ -47,19 +47,19 @@ function PostModule(props) {
                 postIcons = {props.postIcons(toggleEventForm,openLoadingPopup,closeLoadingPopup,props.bookmarked,props.postId)}
             />
             <div className = "post-description">{props.description}</div>
-            <div className = "post-tag-container">
-                {props.tags.map((tag,index) => {
-                    return (
-                    (props.searchPage) ? (
-                        <div className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</div>
-                    ) : (
-                    <Link id = {index} to = "/search" state = {tag} style={{ textDecoration: 'none' }}>
-                        <div className = "post-tag">{"#" + tag}</div>
-                    </Link>
-                    ));
-                })}
-            </div>
-        </div>
+                <div className = "post-tag-container">
+                    {props.tags.map((tag,index) => {
+                        return (
+                        (props.searchPage) ? (
+                            <div className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</div>
+                        ) : (
+                        <Link id = {index} to = "/search" state = {tag} style={{ textDecoration: 'none' }}>
+                            <div className = "post-tag">{"#" + tag}</div>
+                        </Link>
+                        ));
+                    })}
+                </div>
+         </div>
     );
 };
 

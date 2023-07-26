@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import "./ProfilePost.css";
-import PersonalPost from "./PersonalPost.js";
-import BookmarkPost from "./BookmarkPost.js";
+import PersonalUpload from "./PersonalUpload.js";
 import Upload from "./Upload.js";
 
 function ProfilePost(props) {
@@ -39,7 +38,7 @@ function ProfilePost(props) {
                 <i className = "fa-solid fa-bookmark fa-2x" onClick = {setBookmarkType}></i>
                 <i className="fa-regular fa-square-plus fa-2x" onClick = {setUploadType}></i>
             </div>
-            {postType === "PERSONAL" && <PersonalPost 
+            {postType === "PERSONAL" && <PersonalUpload 
                 closeLoadingPopup = {props.closeLoadingPopup}
                 openLoadingPopup = {props.openLoadingPopup}
                 openNotifPopup = {props.openNotifPopup}

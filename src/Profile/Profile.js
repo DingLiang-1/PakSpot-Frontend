@@ -1,5 +1,5 @@
 import React , {useState, useReducer, useContext} from "react";
-import ProfileInfo from "./ProfileInfo.js";
+import ProfileHeader from "./ProfileHeader.js";
 import ProfilePost from "./ProfilePost.js";
 import "./Profile.css";
 import Notification from "../Shared/Notification.js";
@@ -81,7 +81,7 @@ function Profile() {
                     handleDelete = {deleteNotifPopup.handleDelete}
                 />
             }
-            <ProfileInfo 
+            <ProfileHeader 
                 profilePicLink = {auth.profilePicLink}
                 username = {auth.username}
                 closeLoadingPopup = {closeLoadingPopup}
