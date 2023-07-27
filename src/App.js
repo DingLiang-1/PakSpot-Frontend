@@ -52,10 +52,10 @@ function App() {
     }, [login]);
 
     let authPath = (
-        (isFirstRender) ? (
+        (isFirstRender && !token) ? (
             [{
                 path: "*",
-                element: <Authenticate/>
+                element: <Background />
             }] 
         ) : (
             (token) ? (
