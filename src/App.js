@@ -1,5 +1,5 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, createHashRouter} from "react-router-dom";
 import React, { useState, useCallback, useEffect } from "react";
 import Planner from "./Planner/Planner.js";
 import Authenticate from "./Authentication/Authenticate.js";
@@ -91,7 +91,7 @@ function App() {
     console.log(isFirstRender);
     console.log(token);
 
-    let router = createBrowserRouter(
+    let router = createHashRouter(
         [...authPath]
     );
     return (
