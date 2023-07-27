@@ -168,6 +168,9 @@ function Planner() {
     };
 
     async function scheduledEvents() {
+        if (!auth.userId) {
+            return;
+        };
         let response;
         openLoadingPopup();
         try { 
@@ -256,7 +259,7 @@ function Planner() {
         };
     };
 
-    useEffect(() => {scheduledEvents();}, [dateState.currentDateMonth, dateState.currentDateYear, eventUpdate]);
+    useEffect(() => {scheduledEvents();}, [dateState.currentDateMonth, dateState.currentDateYear, eventUpdate,auth]);
 
     return (
         <div className = "planner">

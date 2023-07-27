@@ -31,6 +31,9 @@ function Feed() {
 
     useEffect(() => {
         openLoadingPopup();
+        if (!auth.userId) {
+            return;
+        };
         async function getImages() {
             let response;
             try {
@@ -56,7 +59,7 @@ function Feed() {
             };
         };
         getImages();
-    }, []);
+    }, [auth]);
 
     return (
         <div className = "feed">

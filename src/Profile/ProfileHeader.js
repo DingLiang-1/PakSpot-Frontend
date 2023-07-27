@@ -46,6 +46,9 @@ function ProfileHeader(props) {
     };
 
     async function getProfileInfo() {
+        if (!auth.userId) {
+            return;
+        };
         let response;
         props.openLoadingPopup();
         try { 
@@ -68,7 +71,7 @@ function ProfileHeader(props) {
             return;
         }
     };
-    useEffect(() => {getProfileInfo();}, [refreshProfile]);
+    useEffect(() => {getProfileInfo();}, [refreshProfile,auth]);
 
     function addImage(event) {
         updateImageFile(event.target.files[0]);

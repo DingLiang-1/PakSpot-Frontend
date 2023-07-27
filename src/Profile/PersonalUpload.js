@@ -19,6 +19,9 @@ function PersonalUpload(props) {
     const auth = useContext(AuthContext);
 
     async function getImages(route) {
+        if (!auth.userId) {
+            return;
+        };
         let response;
         try {
             console.log("runned");
@@ -63,7 +66,7 @@ function PersonalUpload(props) {
     useEffect(() => {
         props.openLoadingPopup();
         getImages("personalpost");
-    }, [refreshPersonalPostPageState]);
+    }, [refreshPersonalPostPageState,auth]);
 
     function postPopupPersonal(event) {
         setGridFormatPersonal(false);
@@ -109,7 +112,7 @@ function PersonalUpload(props) {
         } else {
             setToGridBookmark();
         }
-    },[props.bookmarkState]);
+    },[props.bookmarkState,auth]);
 
     if (props.bookmarkState ? bookmarkedPost : personalPost) {
         return (

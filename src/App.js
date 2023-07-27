@@ -1,5 +1,5 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider, redirect } from "react-router-dom";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import React, { useState, useCallback, useEffect } from "react";
 import Planner from "./Planner/Planner.js";
 import Authenticate from "./Authentication/Authenticate.js";
@@ -51,56 +51,49 @@ function App() {
         };
     }, [login]);
 
-    let authPath = (
-        (isFirstRender && !token) ? (
+    let authPath = (   
+        (token || isFirstRender) ? (
             [{
-                path: "*",
-                element: <Background />
+                path: "/",
+                element: <Background />,
+                children: [
+                    {
+                    index: true,
+                    element: <Feed />
+                    },
+                    {
+                    path: "feed",
+                    element: <Feed />,
+                    },
+                    {
+                    path: "search",
+                    element: <SearchPage />
+                    },
+                    {
+                    path: "planner",
+                    element: <Planner />,
+                    },
+                    {
+                    path: "profile",
+                    element: <Profile />
+                    }
+                ],
             }] 
         ) : (
-            (token) ? (
-                [{
-                    path: "/",
-                    element: <Background />,
-                    children: [
-                        {
-                        index: true,
-                        element: <Feed />
-                        },
-                        {
-                        path: "feed",
-                        element: <Feed />,
-                        },
-                        {
-                        path: "search",
-                        element: <SearchPage />
-                        },
-                        {
-                        path: "planner",
-                        element: <Planner />,
-                        },
-                        {
-                        path: "profile",
-                        element: <Profile />
-                        }
-                    ],
-                }] 
-            ) : (
-                [{
-                    path: "/",
-                    element: <Authenticate />,
-                }]
-            )
+            [{
+                path: "/",
+                element: <Authenticate />,
+            }]
         )
     );
 
     useEffect(() => { setIsFirstRender(initial => (!initial)); }, []);
+    console.log(isFirstRender);
+    console.log(token);
 
     let router = createBrowserRouter(
         [...authPath]
     );
-
-    console.log(token);
     return (
         <AuthContext.Provider
         value={{
