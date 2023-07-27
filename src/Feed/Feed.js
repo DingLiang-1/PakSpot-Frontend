@@ -82,6 +82,7 @@ function Feed() {
                         eventFormClassName = "feedEventFormPopup"
                         bookmarked = {post.bookmarked}
                         postId = {post._id}
+                        tagContainerClass = "post-tag-container"
                         searchPage = {false}
                     />
                 )})}

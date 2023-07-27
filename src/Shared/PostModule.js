@@ -6,15 +6,16 @@ import "./DefaultPostModule.css";
 import Notification from "./Notification.js";
 
 function PostModule(props) {
-    const [popup, popped] = useState(false);
+    const [eventFormPopupState, setEventFormPopupState] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     function toggleEventForm() {
-        popped(initial => !initial); 
+        setEventFormPopupState(initial => !initial); 
         return;
     };
+
     function closeOnSubmit() {
-        popped(false);
+        setEventFormPopupState(false);
     };
 
     function openLoadingPopup() {
@@ -27,7 +28,7 @@ function PostModule(props) {
 
     return (
         <div className = {props.postClassName}>
-            {props.form && (popup) && <EventForm 
+            {props.form && (eventFormPopupState) && <EventForm 
                 closeOnSubmit = {closeOnSubmit}
                 address = {props.address}
                 location = {props.location}
@@ -47,16 +48,16 @@ function PostModule(props) {
                 postIcons = {props.postIcons(toggleEventForm,openLoadingPopup,closeLoadingPopup,props.bookmarked,props.postId)}
             />
             <div className = "post-description">{props.description}</div>
-                <div className = "post-tag-container">
+                <div className = {props.tagContainerClass}>
                     {props.tags.map((tag,index) => {
                         return (
-                        (props.searchPage) ? (
-                            <div className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</div>
-                        ) : (
-                        <Link id = {index} to = "/search" state = {tag} style={{ textDecoration: 'none' }}>
-                            <div className = "post-tag">{"#" + tag}</div>
-                        </Link>
-                        ));
+                            (props.searchPage) ? (
+                                <div className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</div>
+                            ) : (
+                            <Link id = {index} to = "/search" state = {tag} style={{ textDecoration: 'none' }}>
+                                <div className = "post-tag">{"#" + tag}</div>
+                            </Link>)
+                        );
                     })}
                 </div>
          </div>

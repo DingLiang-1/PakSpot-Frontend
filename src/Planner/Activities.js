@@ -1,4 +1,4 @@
-import React, {useState, useReducer } from "react";
+import React from "react";
 import "./Activities.css";
 import EventBar from "./EventBar.js";
 

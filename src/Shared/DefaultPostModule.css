@@ -57,7 +57,7 @@
     align-items: center;
 }
 
-.post-tag {
+.post-tag-container .post-tag {
     padding: 0px 5px;
     height:25px;
     display:flex;

@@ -36,7 +36,6 @@ function SearchPage() {
     };
   
     useEffect(() => {
-        console.log("run");
         if (searched) {
             submitQuery();
         };
@@ -59,6 +58,9 @@ function SearchPage() {
 
 
     async function submitQuery(event) {
+        if (!auth.entity) {
+            return;
+        };
         if (event) {
             event.preventDefault();
             event.stopPropagation();

@@ -2,7 +2,12 @@ import React, {useState, useEffect, useReducer, useCallback} from "react";
 import "./Calendar.css";
 
 function Calendar(props) {
-    
+    let firstDayMonth = new Date(props.currentDateYear + "-" + ((props.currentDateMonth < 10) ? '0' + props.currentDateMonth : props.currentDateMonth) + "-01").getDay();
+    let daysInMonth = (props.currentDateMonth === 2) ? 28 : ((props.currentDateMonth % 2 === 0) ? 30 : 31);
+    let lastDayMonth = new Date(props.currentDateYear + "-" + ((props.currentDateMonth < 10) ? '0' + props.currentDateMonth : props.currentDateMonth) + "-" + daysInMonth).getDay();
+    let daysFromPrevMonth = firstDayMonth;
+    let daysFromNextMonth = 6 - lastDayMonth;
+
     function handleYearUpdate(event) {
         props.handleYearUpdate(parseInt(event.target.value));
     };
@@ -14,12 +19,6 @@ function Calendar(props) {
     function handleDateUpdate(event) {
         props.handleDateUpdate(JSON.parse(event.target.value));
     };
-
-    let firstDayMonth = new Date(props.currentDateYear + "-" + ((props.currentDateMonth < 10) ? '0' + props.currentDateMonth : props.currentDateMonth) + "-01").getDay();
-    let daysInMonth = (props.currentDateMonth === 2) ? 28 : ((props.currentDateMonth % 2 === 0) ? 30 : 31);
-    let lastDayMonth = new Date(props.currentDateYear + "-" + ((props.currentDateMonth < 10) ? '0' + props.currentDateMonth : props.currentDateMonth) + "-" + daysInMonth).getDay();
-    let daysFromPrevMonth = firstDayMonth;
-    let daysFromNextMonth = 6 - lastDayMonth;
 
     let gridStart = Array.from({ length: daysFromPrevMonth }, (value, index) => index).reverse().map((content,index) => {
         let dateNumber = ((daysInMonth === 30) ? daysInMonth + 1 - content : daysInMonth - 1 - content);
@@ -63,20 +62,20 @@ function Calendar(props) {
     });
 
     return (
-    <div className = "calendar">
-        <select id = "calendar-year" onChange = {handleYearUpdate} value= {props.currentDateYear}>
-            {Array.from({ length: 100 }, (value, index) => ((new Date().getFullYear() - 50) + index)).map((year) => (<option value = {year} >{year}</option>))}
-        </select>
-        <select id = "calendar-month" onChange = {handleMonthUpdate} value = {props.currentDateMonth}>
-            {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month,index) => <option value = {index + 1} >{month}</option>)}
-        </select>
-        <div className = "calendar-grid">
-            {[<p className = "week-days">Sun</p>,<p className = "week-days">Mon</p>,<p className = "week-days">Tue</p>,<p className = "week-days">Wed</p>,<p className = "week-days">Thu</p>,<p className = "week-days">Fri</p>,<p className = "week-days">Sat</p>]}
-            {gridStart}
-            {gridMain}
-            {gridEnd}
+        <div className = "calendar">
+            <select id = "calendar-year" onChange = {handleYearUpdate} value= {props.currentDateYear}>
+                {Array.from({ length: 100 }, (value, index) => ((new Date().getFullYear() - 50) + index)).map((year) => (<option value = {year} >{year}</option>))}
+            </select>
+            <select id = "calendar-month" onChange = {handleMonthUpdate} value = {props.currentDateMonth}>
+                {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month,index) => <option value = {index + 1} >{month}</option>)}
+            </select>
+            <div className = "calendar-grid">
+                {[<p className = "week-days">Sun</p>,<p className = "week-days">Mon</p>,<p className = "week-days">Tue</p>,<p className = "week-days">Wed</p>,<p className = "week-days">Thu</p>,<p className = "week-days">Fri</p>,<p className = "week-days">Sat</p>]}
+                {gridStart}
+                {gridMain}
+                {gridEnd}
+            </div>
         </div>
-    </div>
     );
 };
 

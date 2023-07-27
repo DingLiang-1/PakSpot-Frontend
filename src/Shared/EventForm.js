@@ -76,10 +76,10 @@ function EventForm(props) {
                             props.closeOnSubmit();
                             props.closeLoadingPopup();
                             props.refreshPage();
-                            response.json().then(res => {props.openEditEventNotifPopup(res.message);});
+                            response.json().then(res => {props.openNotifPopup(res.message);});
                         } else {
                             props.closeLoadingPopup();
-                            response.json().then(res => {props.openEditEventNotifPopup(res.error);});
+                            response.json().then(res => {props.openNotifPopup(res.error);});
                         };
                         return;
                     default :

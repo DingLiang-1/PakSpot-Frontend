@@ -20,13 +20,7 @@ function ProfilePost(props) {
         };
         setBookmarkState(true);
     };
-/*
-     {postType === "BOOKMARKED" && <BookmarkPost 
-                closeLoadingPopup = {props.closeLoadingPopup}
-                openLoadingPopup = {props.openLoadingPopup}
-                openNotifPopup = {props.openNotifPopup}
-            />}
-    */
+
     function setUploadType() {
         setPostType("UPLOAD");
     };

@@ -21,6 +21,7 @@ function PersonalUpload(props) {
     async function getImages(route) {
         let response;
         try {
+            console.log("runned");
             response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/${route}/${auth.entity}/${auth.userId}`, {
                     method: "GET",
                     headers : {

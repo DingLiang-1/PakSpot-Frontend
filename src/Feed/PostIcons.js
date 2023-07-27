@@ -12,7 +12,7 @@ function PostIcons(props) {
 
     //placeholder function, remove this with update "like" function
     function toggleLike() {
-        liked(!like);
+        liked(initial => (!initial));
         return;
     };
 
