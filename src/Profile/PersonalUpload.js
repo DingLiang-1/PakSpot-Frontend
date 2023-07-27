@@ -140,7 +140,6 @@ function PersonalUpload(props) {
                         openDeleteNotifPopup = {props.openDeleteNotifPopup}
                         closeDeleteNotifPopup = {props.closeDeleteNotifPopup}
                         bookmarkState = {props.bookmarkState}
-                        searchPage = {true}
                     />
                 </div>) 
             ));

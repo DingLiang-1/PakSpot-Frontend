@@ -159,6 +159,7 @@ function SearchPage() {
                                     eventFormClassName = "feedEventFormPopup"
                                     searchPage = {true}
                                     updateTagSearch = {updateTagSearch}
+                                    tagContainerClass = "post-tag-container"
                                 />
                             );
                         }

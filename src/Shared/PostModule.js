@@ -52,7 +52,7 @@ function PostModule(props) {
                     {props.tags.map((tag,index) => {
                         return (
                             (props.searchPage) ? (
-                                <div className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</div>
+                                <div id = {index} className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</div>
                             ) : (
                             <Link id = {index} to = "/search" state = {tag} style={{ textDecoration: 'none' }}>
                                 <div className = "post-tag">{"#" + tag}</div>

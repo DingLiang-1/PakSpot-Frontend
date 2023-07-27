@@ -105,7 +105,7 @@ function PostPopup(props) {
             bookmarked = {props.post.bookmarked}
             postId = {props.post._id}
             tagContainerClass = "post-tag-container"
-            searchPage = {props.searchPage}
+            searchPage = {true}
         />)
     )
 };
