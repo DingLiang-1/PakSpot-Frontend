@@ -52,7 +52,7 @@ function Upload(props) {
         });
         if (response.ok) {
             props.closeLoadingPopup();
-            props.openNotifPopup("Post uploaded successfully, view your post in your personal uploads.")
+            props.openNotifPopup("Upload sucessful")
             return;
         } else {
             props.closeLoadingPopup();

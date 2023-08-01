@@ -4,7 +4,7 @@
     left:5px;
     width:340px;
     height:325px;
-    z-index:2;
+    z-index:1;
 }
 
 .post {
@@ -56,24 +56,24 @@
     margin-right:2px;
 }
 
-::-webkit-scrollbar {
+.post-description-container::-webkit-scrollbar {
     width:10px;
     height:5px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+.post-description-container::-webkit-scrollbar-track {
     width:10px;
 }
  
 /* Handle */
-::-webkit-scrollbar-thumb {
+.post-description-container::-webkit-scrollbar-thumb {
   background: grey; 
   border-radius: 5px;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.post-description-container::-webkit-scrollbar-thumb:hover {
   background: white; 
 }
 

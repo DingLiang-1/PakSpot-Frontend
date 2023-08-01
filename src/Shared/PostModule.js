@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import {Link} from "react-router-dom";
 import MediaModule from "./MediaModule.js";
 import EventForm from "./EventForm.js";
 import "./DefaultPostModule.css";
 import Notification from "./Notification.js";
 
+const notifPopupReducer = (state, action) => {
+    return action;
+};
+
 function PostModule(props) {
     const [eventFormPopupState, setEventFormPopupState] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [notifPopupState, setNotifPopupState] = useReducer(notifPopupReducer, {popup : false, message :""});
 
     function toggleEventForm() {
         setEventFormPopupState(initial => !initial); 
@@ -26,8 +31,23 @@ function PostModule(props) {
         setIsLoading(false);
     };
 
+    function closeNotifPopup() {
+        setNotifPopupState({popup : false, message : ""});
+    };
+
+    function openNotifPopup(message) {
+        setNotifPopupState({popup : true, message : message});
+    };
+
     return (
         <div className = {props.postClassName}>
+            {notifPopupState.popup && <Notification
+                login = {true}
+                type = "eventNotification"
+                message = {notifPopupState.message}
+                handleNotifPopup = {closeNotifPopup}
+            />}
+
             {props.form && (eventFormPopupState) && <EventForm 
                 closeOnSubmit = {closeOnSubmit}
                 address = {props.address}
@@ -35,10 +55,13 @@ function PostModule(props) {
                 type = {props.type}
                 formHeader = {props.formHeader}
                 eventFormClassName = {props.eventFormClassName}
+                openLoadingPopup = {openLoadingPopup}
+                closeLoadingPopup = {closeLoadingPopup}
+                openNotifPopup = {openNotifPopup}
             />}
             {isLoading && <Notification 
-                    login = {true}
-                    type = "loading"
+                login = {true}
+                type = "loading"
             />}
             <h3>{props.location}</h3>
             <h6>{props.address}</h6>

@@ -21,33 +21,38 @@
     text-align: center;
 
 }
+.calender-select-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color:white;
+}
 
-#calendar-year {
-    width:80px;
+.calendar-select-year {
+    width:60px;
     height:30px;
     position:absolute;
     left:0px;
     top:0px;
-    border:none;
-    outline:none;
-    background-color: transparent;
     font-size:20px;
-    font-family:"Poppins";
-    color:white;
 }
 
-#calendar-month {
+.calendar-select-month {
     width:80px;
     height:40px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    font-size:30px;
+}
+
+.calender-select-container select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
     border:none;
     outline:none;
-    font-size:30px;
-    font-family:"Poppins";
     background-color: transparent;
+    font-family:"Poppins";
     color:white;
+    font-size: 100%;
 }
 
 .calendar-grid .week-days {
@@ -61,6 +66,7 @@
     border-color: black;
     position:relative;
 }
+
 
 .calendar-days .has-event {
     position:absolute;

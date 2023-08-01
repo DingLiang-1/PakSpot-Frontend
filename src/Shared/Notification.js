@@ -13,10 +13,10 @@ function Notification(props) {
                 </div>);
             case "confirmation" :
                 return (<div className = "notification-box">
-                    <h5>{props.message}</h5>
+                    <h4>{props.message}</h4>
                     <div className = "confirmation-notification-button-div">
                         <div className = "notification-delete-button-div">
-                            <button type = "button" onClick = {props.handleNotifPopup}>CLOSE</button>
+                            <button type = "button" onClick = {props.handleNotifPopup}>CANCEL</button>
                         </div>
                         <div className = "notification-button-div">
                             <button type = "button" onClick = {props.handleDelete}>CONFIRM</button>
@@ -26,7 +26,7 @@ function Notification(props) {
                 )
             default :
                 return (<div className = "notification-box">
-                    <h5>{props.message}</h5>
+                    <h4>{props.message}</h4>
                     <div className = "notification-button-div">
                         <button type = "button" className = "notification-button" onClick = {props.handleNotifPopup}>CLOSE</button>
                     </div>

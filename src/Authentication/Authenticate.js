@@ -172,7 +172,7 @@ function Authenticate() {
                 };
             } catch(err) {
                 closeLoadingPopup();
-                openNotifPopup("123Unknown error occurred, please try again!");
+                openNotifPopup("Unknown error occurred, please try again!");
                 return;
             };
         };

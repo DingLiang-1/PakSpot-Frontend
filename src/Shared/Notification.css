@@ -9,7 +9,6 @@
     top:0px;
     left:0px;
     z-index:2;
-}
 
 .auth{
     height:100vh;
@@ -24,9 +23,9 @@
     height:80px;
     width: 80px;
     background-color:white;
-    color:black;
+    color:blue;
     border-radius:5px;
-    border: 1px solid black;
+    border: 2px solid blue;
 }
 
 .notification-box {
@@ -38,8 +37,10 @@
     width: 400px;
     background-color:white;
     color:black;
-    border: 2px solid black;
+    border: 3px solid blue;
     border-radius:5px;
+    font-family: Verdana;
+}
 }
 
 .notification-button-div {

@@ -32,9 +32,9 @@ function Activities(props) {
                             toggleEditEventForm = {props.toggleEditEventForm}
                             openDeleteEventNotif = {props.openDeleteEventNotif}
                         />)) :
-                    <h3>NO EVENTS SCHEDULED</h3>
+                    <h3>NO EVENT SCHEDULED</h3>
                 :
-                <h3>NO EVENTS SCHEDULED</h3>
+                <h3>NO EVENT SCHEDULED</h3>
             }
         </div>
     </div>);         

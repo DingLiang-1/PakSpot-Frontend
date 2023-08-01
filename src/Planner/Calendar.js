@@ -76,12 +76,18 @@ function Calendar(props) {
 
     return (
         <div className = "calendar">
-            <select id = "calendar-year" onChange = {handleYearUpdate} value= {props.currentDateYear}>
-                {Array.from({ length: 100 }, (value, index) => ((new Date().getFullYear() - 50) + index)).map((year,index) => (<option key = {index} value = {year} >{year}</option>))}
-            </select>
-            <select id = "calendar-month" onChange = {handleMonthUpdate} value = {props.currentDateMonth}>
-                {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month,index) => (<option key = {index} value = {index + 1} >{month}</option>))}
-            </select>
+            <div className = "calender-select-container calendar-select-year">
+                <select onChange = {handleYearUpdate} value= {props.currentDateYear}>
+                    {Array.from({ length: 100 }, (value, index) => ((new Date().getFullYear() - 50) + index)).map((year,index) => (<option key = {index} value = {year} >{year}</option>))}
+                </select>
+                <i class="fa-solid fa-chevron-down fa-xs"></i>
+            </div>
+            <div className = "calender-select-container calendar-select-month">
+                <select onChange = {handleMonthUpdate} value = {props.currentDateMonth}>
+                    {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month,index) => (<option key = {index} value = {index + 1} >{month}</option>))}
+                </select>
+                <i class="fa-solid fa-chevron-down fa-2xs"></i>
+            </div>
             <div className = "calendar-grid">
                 {[<p className = "week-days">Sun</p>,<p className = "week-days">Mon</p>,<p className = "week-days">Tue</p>,<p className = "week-days">Wed</p>,<p className = "week-days">Thu</p>,<p className = "week-days">Fri</p>,<p className = "week-days">Sat</p>]}
                 {gridStart}

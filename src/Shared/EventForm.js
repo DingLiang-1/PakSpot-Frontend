@@ -23,13 +23,14 @@ function EventForm(props) {
             },
             eventformdescriptioninput : {
                 value : "",
-                isValid : false
+                isValid : true
             }
         },
         false);
 
         async function submitForm(event) {
             event.preventDefault();
+            props.openLoadingPopup();
             let response;
             try { 
                 switch (props.type) {
@@ -51,7 +52,11 @@ function EventForm(props) {
                             });
                         if (response.ok) {
                             props.closeOnSubmit();
+                            props.closeLoadingPopup();
+                            props.openNotifPopup("Event scheduled");
                         } else {
+                            props.closeLoadingPopup();
+                            props.openNotifPopup("An error occured, please try again!");
                             return;
                         };
                         return;
@@ -202,7 +207,7 @@ function EventForm(props) {
                     placeholder = "Max 250 Characters"            
                     rows = "3"
                     validators = {[
-                        ((value) => value.length > 0 && value.length <= 250)
+                        ((value) => (value.length > 0 && value.length <= 250))
                     ]}
                     errorAlert = "Please enter a maximum of 250 characters"
                     onInput = {handleOverallValidity}
