@@ -37,7 +37,7 @@ function PostPopup(props) {
                     return;
                 };
             } catch(err) {
-                console.log("An error occurred, please try again");
+    
             };
         };
         props.openDeleteNotifPopup({message : "Please confirm delete!", handleDelete : deleteEventReq});
@@ -95,7 +95,7 @@ function PostPopup(props) {
             postClassName = "post"
             mediaClassName = "media"
             formHeader = "Set Date"
-            eventFormClassName = "feedEventFormPopupBookmark"
+            eventFormClassName = "feedEventFormPopup"
             location = {props.post.location}
             images = {props.post.imageLinks}
             description = {props.post.description}

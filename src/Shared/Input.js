@@ -19,6 +19,12 @@ function inputReducer(state, action) {
                 ...state,
                 isTouched:true
             });
+        case "RESET" :
+            return ({
+                isValid : false,
+                isTouched:false,
+                value: ""
+            });
         default:
             return state;
     };
@@ -35,11 +41,11 @@ function Input(props) {
     }, [onInput, id, isValid, value]);
 
     useEffect(() => {
-        if (props.updateInputValue) {
-            dispatch({type:"CHANGE", val:props.updateInputValue, validators:props.validators});
+        if (props.resetInput) {
+            dispatch({type:"RESET"});
         };
-    },[props.updateInputValue]);
- 
+    },[props.resetInput]);
+    
 
     function handleChange(event) {
         dispatch({type:"CHANGE", val:event.target.value, validators:props.validators});
@@ -63,6 +69,7 @@ function Input(props) {
                     value = {inputState.value}
                     onChange = {handleChange}
                     onBlur = {handleTouch}
+                    maxLength = {props.maxLength}
                 />
                 :
                 <input
@@ -73,6 +80,7 @@ function Input(props) {
                     value = {inputState.value}
                     onChange = {handleChange}
                     onBlur = {handleTouch}
+                    maxLength = {props.maxLength}
                 />
             }
             {(inputState.isTouched) && (!inputState.isValid) && <p className = "input-error">{props.errorAlert}</p>}

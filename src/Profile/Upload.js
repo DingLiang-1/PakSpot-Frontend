@@ -60,7 +60,6 @@ function Upload(props) {
             return;
         };
         } catch(err) {
-            console.log(err);
             return;
         };
     }; 
@@ -98,7 +97,6 @@ function Upload(props) {
             updateImageFiles(initial => {
                 let deepcopy = [...initial];
                 deepcopy.splice(sliderIndex,1);
-                console.log("removed");
                 return deepcopy;
             });
             setSliderIndex(initial => ((initial - 1 < 0) ? 0 : initial - 1));
@@ -181,6 +179,7 @@ function Upload(props) {
                 inputType = "text"
                 placeholder = "Description" 
                 errorAlert = "Required field"
+                maxLength = "250"
                 validators = {[ 
                     ((value) => value.length > 0)
                 ]}

@@ -37,7 +37,8 @@
 }
 
 .edit-profile-button:hover {
-    background-color: rgb(118, 118, 248);
+    background-color: blue;
+    color:white;
 }
 
 .profile-dropdown-icon {
@@ -106,14 +107,14 @@
 }
 
 .edit-profile-username {
-    width: 200px;
-    height:40px;
+    width: 250px;
+    height:45px;
     background-color: white;
     display: flex;
     flex-direction:column;
     justify-content:center;
     align-items: left;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .edit-profile-username  input{
@@ -126,7 +127,7 @@
 }
 
 .edit-profile-username label {
-    font-size: 10px;
+    font-size: 11px;
     margin-top:5px;
     margin-left:10px;
 }
@@ -139,12 +140,12 @@
     align-items: center;
     height:25px;
     width:60px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .edit-profile-submit-button > button {
     background-color: white;
-    border-radius:10px;
+    border-radius:5px;
     width:100%;
     height:100%;
     outline:none;
@@ -154,7 +155,8 @@
 }
 
 .edit-profile-submit-button > button:hover {
-    background-color: rgb(83, 83, 217);
+    background-color: blue;
+    color:white;
 }
 
 .edit-profile-form-cross {

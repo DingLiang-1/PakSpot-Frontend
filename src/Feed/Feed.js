@@ -50,11 +50,9 @@ function Feed() {
                     closeLoadingPopup();
                     return;
                 } else {
-                    console.log("Please refresh the page");
                     return;
                 };
             } catch(err) {
-                console.log(err);
                 return;
             };
         };

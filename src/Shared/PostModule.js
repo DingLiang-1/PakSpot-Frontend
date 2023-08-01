@@ -47,7 +47,9 @@ function PostModule(props) {
                 mediaClassName = {props.mediaClassName}
                 postIcons = {props.postIcons(toggleEventForm,openLoadingPopup,closeLoadingPopup,props.bookmarked,props.postId)}
             />
+            <div className = "post-description-container">
             <div className = "post-description">{props.description}</div>
+            </div>
                 <div className = {props.tagContainerClass}>
                     {props.tags.map((tag,index) => {
                         return (

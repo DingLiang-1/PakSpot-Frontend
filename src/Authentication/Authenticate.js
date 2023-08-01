@@ -18,6 +18,7 @@ function Authenticate() {
     const [entity, setEntity] = useState("users");
     const [forgetPassword, setForgetPasswordState] = useState(false);
     const [verified, setVerified] = useState(false);
+    const [resetInput, toggleResetInput] = useState(false);
 
     function closeNotifPopup(event) {
         setNotifPopup(false);
@@ -38,6 +39,7 @@ function Authenticate() {
         updateAccountStatus(initial => !initial);
         setForgetPasswordState(false);
         setVerified(false);
+        toggleResetInput(false);
         removeInputs(["reEnterPassword","verificationCode","password"]);
     };
 
@@ -160,6 +162,7 @@ function Authenticate() {
                     closeLoadingPopup();
                     removeInputs(["username", "reEnterPassword"]);
                     updateAccountStatus(true);
+                    toggleResetInput(true);
                     await response.json().then(res => {openNotifPopup(res.message);});
                     return;
                 } else {
@@ -254,6 +257,7 @@ function Authenticate() {
             inputType="email" 
             placeholder="Username@gmail.com"
             errorAlert = "Please enter a valid email address"
+            resetInput = {resetInput}
             validators = {[
                 ((value) => value.length > 0)
             ]}
@@ -293,6 +297,7 @@ function Authenticate() {
                 ]}
                 onInput = {handleOverallValidity}
                 cachePassword = {cachePassword}
+                resetInput = {resetInput}
             />
         )}
         {(!hasAccount || verified) && 
@@ -309,7 +314,9 @@ function Authenticate() {
             ]}
             onInput = {handleOverallValidity}
         />}
-            <button type = "submit" className={"login" + (!formState.formValid ? " buttonDisable" : "")} disabled = {!formState.formValid} onClick = {handleSubmit}>{(forgetPassword && !verified) ? "Send" : ((forgetPassword && verified ? "Reset" : (hasAccount) ? "Login" : "Register"))}</button>
+        <div className = "auth-form-button">
+            <button type = "submit" disabled = {!formState.formValid} onClick = {handleSubmit}>{(forgetPassword && !verified) ? "Verify" : ((forgetPassword && verified ? "Reset" : (hasAccount) ? "Login" : "Register"))}</button>
+        </div>
         </form>
         <div className="footer">
             <button type = "button" onClick = {handleAccountStatus}>{hasAccount ? "Don't have an account? Signup" : "Have an account? Login"}</button>

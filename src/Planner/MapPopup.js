@@ -16,7 +16,7 @@ function MapPopup(props) {
                     className = {"event-map"}
                 />
                 <div className = "event-map-popup-button">
-                    <button onClick = {props.closeMapPopup}>CLOSE</button>
+                    <button onClick = {props.closeMapPopup}>Close</button>
                 </div>
             </div>);
     };

@@ -75,7 +75,6 @@ function ProfileHeader(props) {
 
     function addImage(event) {
         updateImageFile(event.target.files[0]);
-        console.log(event.target.files[0]);
         const fileReader = new FileReader();
         fileReader.onload = () => {
             setImagePreviewUrl(fileReader.result);
@@ -151,7 +150,7 @@ function ProfileHeader(props) {
                         initialiseValue = {profileInfo.username}
                     />
                     <div className = "edit-profile-submit-button">
-                        <button type = "submit" disabled = {!formState.formValid}>Edit</button>
+                        <button type = "submit" disabled = {!formState.formValid}>Save</button>
                     </div>
                 </form>
             </React.Fragment>

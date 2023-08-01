@@ -52,7 +52,7 @@ function EventForm(props) {
                         if (response.ok) {
                             props.closeOnSubmit();
                         } else {
-                            console.log("please try again");
+                            return;
                         };
                         return;
                     case "editEvent" :
@@ -86,7 +86,7 @@ function EventForm(props) {
                         return;
                 };  
         } catch(err) {
-            console.log(err);
+            return;
         }
     };
 
@@ -98,9 +98,9 @@ function EventForm(props) {
                     id = "eventformdateinput"
                     label = "Date"
                     type = "input"
-                    inputType = "text"
+                    inputType = "date"
                     placeholder = "YYYY-MM-DD" 
-                    errorAlert = "Invalid Format, please try again"
+                    errorAlert = "required field"
                     validators = {[
                         ((value) => value.length === 10),
                         ((value) => {
@@ -129,9 +129,9 @@ function EventForm(props) {
                     id = "eventformstarttimeinput"
                     label = "Start Time"
                     type = "input"
-                    inputType = "text"
+                    inputType = "time"
                     placeholder = "HH:MM"
-                    errorAlert = "Invalid format, please try again"
+                    errorAlert = "required field"
                     validators = {[
                             (value) => (value.length === 5),
                             (value) => (value.slice(2,3) === ":"),
@@ -163,7 +163,7 @@ function EventForm(props) {
                     id = "eventformendtimeinput"
                     label = "End Time"
                     type = "input"
-                    inputType = "text"
+                    inputType = "time"
                     placeholder = "HH:MM"
                     validators = {[
                         (value) => (value.length === 5),
@@ -187,7 +187,7 @@ function EventForm(props) {
                             };
                         }
                 ]}
-                    errorAlert = "Invalid format, please try again"
+                    errorAlert = "required field"
                     onInput = {handleOverallValidity}
                 />
 
@@ -207,7 +207,9 @@ function EventForm(props) {
                     errorAlert = "Please enter a maximum of 250 characters"
                     onInput = {handleOverallValidity}
                 />
-                <button type = "submit" className = "post1" disabled = {!formState.formValid}>Submit</button>
+                <div className = "event-form-submit-button">
+                    <button type = "submit" className = "post1" disabled = {!formState.formValid}>Submit</button>
+                </div>
         </form>
     );
 };

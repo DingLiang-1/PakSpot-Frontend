@@ -50,9 +50,13 @@ function SearchPage() {
         setIsLoading(false);
     };
 
-    function postIcons(toggle) {
+    function postIcons(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
         return <PostIcons 
-            togglePopup = {toggle}
+            toggleEventForm = {toggleEventForm}
+            openLoadingPopup = {openLoadingPopup}
+            closeLoadingPopup = {closeLoadingPopup}
+            bookmarked = {bookmarked}
+            postId = {postId}
         />
     };
 
@@ -158,6 +162,8 @@ function SearchPage() {
                                     formHeader = "Set Date"
                                     eventFormClassName = "feedEventFormPopup"
                                     searchPage = {true}
+                                    bookmarked = {post.bookmarked}
+                                    postId = {post._id}
                                     updateTagSearch = {updateTagSearch}
                                     tagContainerClass = "post-tag-container"
                                 />

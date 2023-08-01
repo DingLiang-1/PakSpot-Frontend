@@ -18,15 +18,14 @@
   }
   
 .authForm {
-    background: #f1f7fe;
+    background: rgb(241, 241, 241);
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
-    box-shadow: 0 0 2em #e6e9f9;
+    border-radius: 5px;
     gap: 2em;
     justify-content:center;
     align-items:center;
-    width:450px;
+    width:500px;
     height:70%;
     position:relative;
 }
@@ -50,18 +49,18 @@
   flex-direction:row;
   align-items:center;
   justify-content: center;
+  color:black;
 }
 
 .auth-entity-button-left {
-  border-radius: 15px 0px 0px 0px;
+  border-radius: 5px 0px 0px 0px;
 }
 .auth-entity-button-right {
-  border-radius: 0px 15px 0px 0px;
+  border-radius: 0px 5px 0px 0px;
 }
 
 .auth-entity-selected {
-  background-color: rgb(204, 202, 202);
-  border-bottom: 3px solid blueviolet;
+  border-bottom: 3px solid blue;
 }
 
 
@@ -70,11 +69,9 @@
     flex-direction:column;
     justify-content: center;
     align-items:center;
-    min-width:40%;
-    max-width:40%;
-    max-height:20%;
-    min-height:20%;
-    margin-top:20px;
+    width:40%;
+    height:20%;
+    margin-top:70px;
   }
   
 .authForm img {
@@ -105,13 +102,12 @@ align-items:center;
 
 .verification-code-input{
   background: white;
-  box-shadow: 0 0 2em #e6e9f9;
   width:85%;
   height:100%;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  border-radius: 20px 0px 0px 20px;
+  border-radius: 5px 0px 0px 5px;
   justify-content:center;
 }
 
@@ -123,7 +119,7 @@ align-items:center;
   justify-content: center;
   align-items: center;
   background: white;
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 0px 5px 5px 0px;
 }
 
 .send-verification-code-div > button {
@@ -132,81 +128,107 @@ align-items:center;
   outline:none;
   border:none;
   color:black;
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 0px 5px 5px 0px;
 }
 
 .send-verification-code-div > button:hover {
-  background-color: rgb(21, 177, 255);
+  background-color: blue;
+  color:white;
 }
 
 .authForm label {
-font-size: 13px;
-margin-left:13px;
-font-weight: 300;
+    font-size: 13px;
+    margin-left:13px;
+    font-weight: 300;
 }
+
 .authForm .authInput {
-background: white;
-box-shadow: 0 0 2em #e6e9f9;
-min-width:85%;
-max-width:85%;
-min-height:55px;
-display: flex;
-flex-direction: column;
-gap: 0.5em;
-border-radius: 20px;
-justify-content:center;
-margin-bottom: 10px;
+    background: white;
+    min-width:85%;
+    max-width:85%;
+    min-height:55px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    border-radius: 5px;
+    justify-content:center;
+    margin-bottom: 10px;
 }
 
 .authForm input {
-outline: none;
-border: none;
-margin-left:13px;
-width:85%
+    outline: none;
+    border: none;
+    margin-left:13px;
+    width:85%
 }
 .authForm input::-moz-placeholder {
-color: black;
-font-size: 13px;
+    color: black;
+    font-size: 13px;
 }
 .authForm input:-ms-input-placeholder {
-color: black;
-font-size: 13px;
+    color: black;
+    font-size: 13px;
 }
 .authForm input::placeholder {
-color: black;
-font-size: 13px;
+    color: black;
+    font-size: 13px;
 }
 .authForm ion-icon {
-color: #4d4d4d;
-/*margin-bottom: -0.2em; */
+    color: #4d4d4d;
+    /*margin-bottom: -0.2em; */
 }
 
-.authForm .login {
-padding: 0.8em;
-background: #3e4684;
-color: white;
-border: none;
-border-radius: 30px;
-font-weight: 600;
+.authForm .auth-form-button {
+    background:white;
+    color: black;
+    border-radius: 5px;
+    font-size: 13px;
+    height:30px;
+    width:60px;
 }
 
-.authForm .login.buttonDisable {
-    background: rgba(164, 163, 163, 0.731);
+.authForm .auth-form-button > button{
+    height:100%;
+    width:100%;
+    border:none;
+    outline:none;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
 }
+
+.authForm .auth-form-button > button:hover:disabled {
+    background-color:white;
+    border:2px solid red;
+    color:red;
+}
+
+.authForm .auth-form-button > button:hover {
+    background-color:white;
+    border:2px solid blue;
+    color:blue;
+}
+
 
 .authForm .footer {
-display: flex;
-font-size: 0.7em;
-color: #5e5e5e;
-gap: 14em;
+    display: flex;
+    font-size: 10px;
+    color: black;
+    gap: 150px;
 }
+
 .authForm .footer span {
-cursor: pointer;
+    cursor: pointer;
 }
 
 .footer button {
-background-color:transparent;
-border-color: transparent;
+    background-color:transparent;
+    border-color: transparent;
+    color: black;
+}
+
+.footer button:hover {
+    color: blue;
 }
 
 .authForm p.input-error {
@@ -214,8 +236,4 @@ border-color: transparent;
     font-family:"Poppins";
     position:relative;
     margin-left:13px;
-}
-
-.authForm button {
-cursor: pointer;
 }

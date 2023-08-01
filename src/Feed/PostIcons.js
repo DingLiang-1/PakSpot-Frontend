@@ -36,12 +36,10 @@ function PostIcons(props) {
                 return;
             } else {
                 props.closeLoadingPopup();
-                console.log("err");
                 return;
             }
         } catch (err) {
             props.closeLoadingPopup();
-            console.log("catch");
             return;
         };
     };

@@ -40,14 +40,18 @@
     width:490px;
 }
 
-.event-map-popup-button > button{
-    background-color: red;
-    color:white;
-    border-radius:20px;
+.event-map-popup-button > button {
+    background-color: white;
+    color:red;
+    border-radius:5px;
     width:60px;
     height:30px;
-    outline:none;
-    border:none;
+    border:2px solid red;
     font-size:15px;
     font-family:"Poppins";
+}
+
+.event-map-popup-button > button:hover {
+    background-color: red;
+    color:white;
 }

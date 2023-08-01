@@ -81,16 +81,13 @@ function App() {
             }] 
         ) : (
             [{
-                path: "/",
+                path: "*",
                 element: <Authenticate />,
             }]
         )
     );
 
     useEffect(() => { setIsFirstRender(initial => (!initial)); }, []);
-    console.log(isFirstRender);
-    console.log(token);
-
     let router = createHashRouter(
         [...authPath]
     );
