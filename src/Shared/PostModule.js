@@ -4,6 +4,7 @@ import MediaModule from "./MediaModule.js";
 import EventForm from "./EventForm.js";
 import "./DefaultPostModule.css";
 import Notification from "./Notification.js";
+import CommentModule from './CommentModule.js';
 
 const notifPopupReducer = (state, action) => {
     return action;
@@ -13,6 +14,7 @@ function PostModule(props) {
     const [eventFormPopupState, setEventFormPopupState] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [notifPopupState, setNotifPopupState] = useReducer(notifPopupReducer, {popup : false, message :""});
+    const [commentPopUp, setCommentPopUp] = useState(false);
 
     function toggleEventForm() {
         setEventFormPopupState(initial => !initial); 
@@ -23,6 +25,10 @@ function PostModule(props) {
         setEventFormPopupState(false);
     };
 
+    const toggleCommentPopUp = () => {
+        setCommentPopUp(prev => !prev);
+    };
+    
     function openLoadingPopup() {
         setIsLoading(true);
     };
@@ -42,12 +48,13 @@ function PostModule(props) {
     return (
         <div className = {props.postClassName}>
             {notifPopupState.popup && <Notification
-                login = {true}
                 type = "eventNotification"
-                message = {notifPopupState.message}
+                content = {<h4>{notifPopupState.message}</h4>}
                 handleNotifPopup = {closeNotifPopup}
             />}
-
+            {isLoading && <Notification 
+                type = "loading"
+            />}
             {props.form && (eventFormPopupState) && <EventForm 
                 closeOnSubmit = {closeOnSubmit}
                 address = {props.address}
@@ -59,16 +66,31 @@ function PostModule(props) {
                 closeLoadingPopup = {closeLoadingPopup}
                 openNotifPopup = {openNotifPopup}
             />}
-            {isLoading && <Notification 
-                login = {true}
-                type = "loading"
-            />}
+            {
+             commentPopUp && <CommentModule
+                closeCommentPopUp={toggleCommentPopUp}
+                postId={props.postId}
+                postEntity={props.postEntity}
+             />
+            }
             <h3>{props.location}</h3>
             <h6>{props.address}</h6>
             <MediaModule  
                 images = {props.images}
                 mediaClassName = {props.mediaClassName}
-                postIcons = {props.postIcons(toggleEventForm,openLoadingPopup,closeLoadingPopup,props.bookmarked,props.postId)}
+                postIcons = {
+                    props.postIcons(
+                        toggleEventForm, 
+                        openLoadingPopup, 
+                        closeLoadingPopup,
+                        props.bookmarked, 
+                        props.postId,
+                        props.postEntity,
+                        props.liked,
+                        toggleCommentPopUp,
+                        commentPopUp
+                    )   
+                }
             />
             <div className = "post-description-container">
             <div className = "post-description">{props.description}</div>
@@ -77,10 +99,10 @@ function PostModule(props) {
                     {props.tags.map((tag,index) => {
                         return (
                             (props.searchPage) ? (
-                                <div id = {index} className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</div>
+                                <button type = "button" id = {index} className = "post-tag" onClick = {props.updateTagSearch} value = {tag}>{"#" + tag}</button>
                             ) : (
                             <Link id = {index} to = "/search" state = {tag} style={{ textDecoration: 'none' }}>
-                                <div className = "post-tag">{"#" + tag}</div>
+                                <button type = "button" className = "post-tag">{"#" + tag}</button>
                             </Link>)
                         );
                     })}

@@ -1,0 +1,121 @@
+.comment-module-container {
+    height: 50%;
+    width: 300px;
+    position: absolute;
+    left: 430px;
+    top: 0px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:center;
+}
+
+.comment-header {
+    width:100%;
+    height:50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid white;
+    position:relative;
+}
+
+.close-comment-button {
+    position:absolute;
+    top:0px;
+    left:0px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size:30px;
+}
+
+.comment-container {
+    width: 100%;
+    height:400px;
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: scroll;
+    margin-top:15px;
+}
+
+.no-comments {
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-body {
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.post-comment {
+    align-self: flex-end;
+    width: 100%;
+    flex-grow: 2;
+}
+
+.post-comment-elements {
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    height:40px;
+}
+
+.post-comment-input {
+    margin-left:5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width:80%;
+    height:100%;
+    background-color: white;
+    border-radius: 5px;
+}
+.post-comment-input > textarea {
+    background-color: transparent;
+    color: black;
+    border:none;
+    outline: none;
+    width: 95%;
+    height: 100%;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-left:10px;
+}
+
+
+.post-comment-elements > button {
+    background-color: lightblue;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-comment-button > i {
+    color:black;
+}
+
+
+

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer, useCallback} from "react";
+import React, {useState, useRef} from "react";
 import "./Calendar.css";
 
 function daysInFeb(year) {
@@ -20,6 +20,8 @@ function Calendar(props) {
     let lastDayMonth = new Date(props.currentDateYear + "-" + ((props.currentDateMonth < 10) ? '0' + props.currentDateMonth : props.currentDateMonth) + "-" + daysInMonth).getDay();
     let daysFromPrevMonth = firstDayMonth;
     let daysFromNextMonth = 6 - lastDayMonth;
+    let monthSelectRef = useRef();
+    let yearSelectRef = useRef();
 
     function handleYearUpdate(event) {
         props.handleYearUpdate(parseInt(event.target.value));
@@ -58,7 +60,7 @@ function Calendar(props) {
             type = "button"
             onClick = {handleDateUpdate}
             value = {JSON.stringify({currentDateMonth : month, currentDateNumber : dateNumber})}
-            >{1 + index}</button>);
+            >{dateNumber}</button>);
     });
 
     let gridMain = Array.from({ length: daysInMonth }, (value, index) => index).map((content,index) => {
@@ -73,21 +75,21 @@ function Calendar(props) {
             onClick = {handleDateUpdate}
             >{dateNumber}{props.eventDays.includes("" + dateNumber) && <hr className = "has-event" />}</button>);
     });
-
+    
     return (
         <div className = "calendar">
-            <div className = "calender-select-container calendar-select-year">
-                <select onChange = {handleYearUpdate} value= {props.currentDateYear}>
+            <button type = "button" className = "calender-select-container calendar-select-year" onClick = {() => {yearSelectRef.current.click();}}>
+                <select ref = {yearSelectRef} onChange = {handleYearUpdate} value= {props.currentDateYear}>
                     {Array.from({ length: 100 }, (value, index) => ((new Date().getFullYear() - 50) + index)).map((year,index) => (<option key = {index} value = {year} >{year}</option>))}
                 </select>
                 <i class="fa-solid fa-chevron-down fa-xs"></i>
-            </div>
-            <div className = "calender-select-container calendar-select-month">
-                <select onChange = {handleMonthUpdate} value = {props.currentDateMonth}>
+            </button>
+            <button type = "button" className = "calender-select-container calendar-select-month" onClick = {() => {monthSelectRef.current.click();}}>
+                <select ref = {monthSelectRef} onChange = {handleMonthUpdate} value = {props.currentDateMonth}>
                     {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month,index) => (<option key = {index} value = {index + 1} >{month}</option>))}
                 </select>
                 <i class="fa-solid fa-chevron-down fa-2xs"></i>
-            </div>
+            </button>
             <div className = "calendar-grid">
                 {[<p className = "week-days">Sun</p>,<p className = "week-days">Mon</p>,<p className = "week-days">Tue</p>,<p className = "week-days">Wed</p>,<p className = "week-days">Thu</p>,<p className = "week-days">Fri</p>,<p className = "week-days">Sat</p>]}
                 {gridStart}

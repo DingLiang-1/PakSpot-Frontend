@@ -1,15 +1,14 @@
 .calendar {
-    margin-top : 30px;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items: center;
     width:490px;
     position:relative;
-    height: 500px;
 }
 
 .calendar-grid {
+    margin-top: 15px;
     display:grid;
     grid-template-columns: repeat(7, 70px);
     grid-template-rows: 30px repeat(6,70px);
@@ -27,6 +26,9 @@
     justify-content: space-between;
     align-items: center;
     color:white;
+    border:none;
+    outline:none;
+    background-color: transparent;
 }
 
 .calendar-select-year {
@@ -34,7 +36,7 @@
     height:30px;
     position:absolute;
     left:0px;
-    top:0px;
+    top:10px;
     font-size:20px;
 }
 
@@ -42,6 +44,7 @@
     width:80px;
     height:40px;
     font-size:30px;
+    margin-top:20px;
 }
 
 .calender-select-container select {

@@ -1,12 +1,13 @@
 .event-map-popup {
-    background-color: black;
-    margin-top : 30px;
+    background-color: none;
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
     align-items: center;
     width:490px;
     height: 500px;
+    margin-left:30px;
+    margin-top:13px;
 }
 .event-map-popup-location {
     flex-direction:column;

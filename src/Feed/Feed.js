@@ -10,22 +10,25 @@ function Feed() {
     const [isLoading, setIsLoading] = useState(false);
     const auth = useContext(AuthContext);
 
-    function openLoadingPopup(event) {
+    function openLoadingPopup() {
         setIsLoading(true);
     };
     
-    function closeLoadingPopup(event) {
+    function closeLoadingPopup() {
         setIsLoading(false);
     };
 
-   //function to add variables and functions from PostModule into PostIcons going inside the PostModule
-    function postIcons(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
+    function postIcons(toggleEventForm, openLoadingPopup, closeLoadingPopup, bookmarked, postId, postEntity, like, toggleCommentPopUp, commentState) {
         return <PostIcons 
             toggleEventForm = {toggleEventForm}
             openLoadingPopup = {openLoadingPopup}
             closeLoadingPopup = {closeLoadingPopup}
+            toggleCommentPopUp= {toggleCommentPopUp}
             bookmarked = {bookmarked}
             postId = {postId}
+            postEntity = {postEntity}
+            like={like}
+            commentState={commentState}
         />
     };
 
@@ -47,7 +50,7 @@ function Feed() {
                     await response.json().then(FeedArray => {
                         setBusinessFeed(FeedArray.reverse());
                     });
-                   closeLoadingPopup();
+                    closeLoadingPopup();
                     return;
                 } else {
                     return;
@@ -62,7 +65,6 @@ function Feed() {
     return (
         <div className = "feed">
             {isLoading && <Notification 
-                login = {true}
                 type = "loading"
             />}
             {businessFeed.map((post,index) => {
@@ -83,8 +85,10 @@ function Feed() {
                         eventFormClassName = "feedEventFormPopup"
                         bookmarked = {post.bookmarked}
                         postId = {post._id}
+                        postEntity={post.postEntity}
                         tagContainerClass = "post-tag-container"
                         searchPage = {false}
+                        liked={post.liked}
                     />
                 )})}
         </div>

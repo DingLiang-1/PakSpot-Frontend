@@ -3,7 +3,6 @@ import "./Authenticate.css";
 import Input from "../Shared/Input.js";
 import useForm from "../Shared/FormHook.js";
 import {AuthContext} from "../Shared/AuthContext.js";
-import {redirect} from "react-router-dom";
 import Notification from "../Shared/Notification.js";
 
 
@@ -44,11 +43,11 @@ function Authenticate() {
     };
 
     function setEntityToUsers() {
-        setEntity(initial => ("users"));
+        setEntity("users");
     };
 
     function setEntityToBusinesses() {
-        setEntity(initial => ("businesses"));
+        setEntity("businesses");
     };
 
     function setForgetPassword() {
@@ -216,14 +215,12 @@ function Authenticate() {
     <div className = "background-auth">
         {notifPopup && 
                 <Notification 
-                    message = {notifMessage}
-                    login = {false}
+                    content = {<h4>{notifMessage}</h4>}
                     type = "message"
                     handleNotifPopup = {closeNotifPopup}
             />}
     {isLoading && 
         <Notification 
-            login = {false}
             type = "loading"
             handleNotifPopup = {closeNotifPopup}
         />}

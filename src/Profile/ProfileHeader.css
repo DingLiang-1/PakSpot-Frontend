@@ -1,11 +1,12 @@
 .profile-header {
     height:25%;
-    width:100%;
+    width:450px;
     position:relative;
     display:flex;
     flex-direction:column;
     justify-content: center;
     align-items: center;
+    border-bottom:1px solid white;
 }
 
 .profile-dropdown-container {
@@ -22,7 +23,32 @@
 }
 
 .profile-dropdown-true {
-    height: 120px;
+    height: 160px;
+}
+
+.privacy-modal-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width:70%;
+
+}
+.privacy-modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+
+.privacy-modal-content .fa-toggle-on {
+    color:rgb(44, 233, 44);
+}
+
+
+.privacy-modal-content .fa-toggle-off {
+    color:red;
 }
 
 .edit-profile-button {
@@ -74,7 +100,7 @@
 .profile-info-hr{
     background-color:white;
     height:0.01px;
-    width:100%;
+    width:450px;
     position:absolute;
     bottom:0px;
 }

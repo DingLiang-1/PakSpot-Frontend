@@ -1,0 +1,83 @@
+.comment-post-container {
+    width: 100%;
+    margin-bottom:10px;
+}
+.comment-post-main {
+    width: 100%;
+    display: flex;
+    flex-direction:row;
+    justify-content: flex-start;
+    margin-bottom:10px;
+}
+
+.comment-post-text {
+    width:70%;
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left:10px;
+}
+
+.comment-post-name {
+    font-weight: bold;
+}
+
+.heart {
+    text-align: center;
+    color: white;
+    border: none;
+    background: none;
+}
+
+.redHeart {
+    color: red;
+}
+
+.comment-post-accessories {
+    margin-top:3px;
+    margin-left:50px;
+    margin-bottom:5px;
+}
+
+.comment-post-replies {
+    width: 80%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.view-replies-button {
+    margin-left:50px;
+}
+
+.view-replies-button > button{
+    outline:none;
+    border:none;
+    background: none;
+    color:white;
+
+}
+
+.reply-comment-button {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    background: transparent;
+    height:20px;
+    width:30px;
+}
+
+.reply-comment-button > button {
+    height:100%;
+    width:100%;
+    border:none;
+    outline:none;
+    background: transparent;
+    color:white;
+}
+
+.reply-comment-input > input {
+    width: 100%;
+}

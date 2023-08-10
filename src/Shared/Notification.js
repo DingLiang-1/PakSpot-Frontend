@@ -13,20 +13,20 @@ function Notification(props) {
                 </div>);
             case "confirmation" :
                 return (<div className = "notification-box">
-                    <h4>{props.message}</h4>
+                    {props.content}
                     <div className = "confirmation-notification-button-div">
+                        <div className = "notification-button-div">
+                            <button type = "button" onClick = {props.handleConfirm}>CONFIRM</button>
+                        </div>
                         <div className = "notification-delete-button-div">
                             <button type = "button" onClick = {props.handleNotifPopup}>CANCEL</button>
-                        </div>
-                        <div className = "notification-button-div">
-                            <button type = "button" onClick = {props.handleDelete}>CONFIRM</button>
                         </div>
                     </div>
                 </div>
                 )
             default :
                 return (<div className = "notification-box">
-                    <h4>{props.message}</h4>
+                    {props.content}
                     <div className = "notification-button-div">
                         <button type = "button" className = "notification-button" onClick = {props.handleNotifPopup}>CLOSE</button>
                     </div>
@@ -34,7 +34,7 @@ function Notification(props) {
         };
     };
     return (
-    <div className = {"notification-container" + (props.login ? "" : " auth")} >
+    <div className = {"notification-container"} >
         {notificationType()}
     </div>);
     };

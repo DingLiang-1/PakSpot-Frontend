@@ -62,23 +62,20 @@ function Profile() {
         <div className = "profile">
             {notifPopup && 
                 <Notification 
-                    message = {notifMessage}
-                    login = {true}
+                    content = {<h4>{notifMessage}</h4>}
                     type = "message"
                     handleNotifPopup = {closeNotifPopup}
                 />}
             {isLoading && 
                 <Notification 
-                    login = {true}
                     type = "loading"
                 />}
             {deleteNotifPopup.popup && 
                 <Notification 
-                    message = {deleteNotifPopup.message}
-                    login = {true}
+                    content = {<h4>{deleteNotifPopup.message}</h4>}
                     type = "confirmation"
                     handleNotifPopup = {closeDeleteNotifPopup}
-                    handleDelete = {deleteNotifPopup.handleDelete}
+                    handleConfirm = {deleteNotifPopup.handleDelete}
                 />
             }
             <ProfileHeader 

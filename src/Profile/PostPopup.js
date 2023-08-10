@@ -44,21 +44,26 @@ function PostPopup(props) {
     };
 
 
-    function postIconsPersonal(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
+    function postIconsPersonal(toggleEventForm, openLoadingPopup, closeLoadingPopup, bookmarked, postId, postEntity, like, toggleCommentPopUp, commentState) {
         return (<PersonalUploadIcons
             toggleEditPostPopup = {props.toggleEditPostPopup}
             openDeleteNotifPopup = {openDeleteNotifPopup}
         />);
     };
 
-    //function to add variables and functions from PostModule into PostIcons going inside the PostModule
-    function postIconsBookmark(toggleEventForm,openLoadingPopup,closeLoadingPopup,bookmarked,postId) {
+    
+
+    function postIconsBookmark(toggleEventForm, openLoadingPopup, closeLoadingPopup, bookmarked, postId, postEntity, like, toggleCommentPopUp, commentState) {
         return <PostIcons 
             toggleEventForm = {toggleEventForm}
             openLoadingPopup = {openLoadingPopup}
             closeLoadingPopup = {closeLoadingPopup}
+            toggleCommentPopUp= {toggleCommentPopUp}
             bookmarked = {bookmarked}
             postId = {postId}
+            postEntity = {postEntity}
+            like={like}
+            commentState={commentState}
         />
     };
 
@@ -104,10 +109,13 @@ function PostPopup(props) {
             tags = {props.post.tags}
             bookmarked = {props.post.bookmarked}
             postId = {props.post._id}
+            postEntity={props.post.postEntity}
             tagContainerClass = "post-tag-container"
             searchPage = {true}
+            liked={props.liked}
         />)
     )
 };
 
 export default PostPopup;
+

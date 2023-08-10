@@ -38,7 +38,7 @@ function Input(props) {
 
     useEffect(() => {
         onInput(id, value, isValid);
-    }, [onInput, id, isValid, value]);
+    }, [id, isValid, value]);
 
     useEffect(() => {
         if (props.resetInput) {
@@ -46,6 +46,11 @@ function Input(props) {
         };
     },[props.resetInput]);
     
+    useEffect(() => {
+        if (props.updateValue) {
+            dispatch({type:"CHANGE", val:props.updateValue, validators:props.validators});
+        };
+    },[props.updateValue])
 
     function handleChange(event) {
         dispatch({type:"CHANGE", val:event.target.value, validators:props.validators});
@@ -54,6 +59,7 @@ function Input(props) {
 
     function handleTouch(event) {
         dispatch({type:"TOUCH"});
+        props.onBlur && props.onBlur();
     };
 
     return (
@@ -69,7 +75,9 @@ function Input(props) {
                     value = {inputState.value}
                     onChange = {handleChange}
                     onBlur = {handleTouch}
+                    onFocus = {props.onFocus}
                     maxLength = {props.maxLength}
+                    ref = {props.reference}
                 />
                 :
                 <input
@@ -80,7 +88,9 @@ function Input(props) {
                     value = {inputState.value}
                     onChange = {handleChange}
                     onBlur = {handleTouch}
+                    onFocus = {props.onFocus}
                     maxLength = {props.maxLength}
+                    ref = {props.reference}
                 />
             }
             {(inputState.isTouched) && (!inputState.isValid) && <p className = "input-error">{props.errorAlert}</p>}

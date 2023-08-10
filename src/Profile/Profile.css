@@ -4,8 +4,8 @@
     align-items:center;
     justify-content: flex-start;
     height:100%;
-    width: 550px;
-    background-color: black;
+    width: 100%;
+    background-color: none;
     position:relative;
 }
 

@@ -1,9 +1,9 @@
 .feedEventFormPopup {
     position:absolute;
-    top:25%;
-    left:5px;
-    width:340px;
-    height:325px;
+    bottom:10px;
+    left:430px;
+    width:80%;
+    height:45%;
     z-index:1;
 }
 
@@ -98,6 +98,8 @@
     border-radius: 10px;
     margin-right: 10px;
     font-size: 15px;
+    outline:none;
+    border:none;
 }
 
 .media {
