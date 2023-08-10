@@ -196,7 +196,7 @@ const CommentModule = props => {
                         {
                              comments.length === 0 ?
                              <div className = "no-comments">
-                                <h2>No Comments Found</h2>
+                                <h3>No Comments</h3>
                              </div> :
                              <div className="comment-body">
                             {comments.map((comment, index) => {
