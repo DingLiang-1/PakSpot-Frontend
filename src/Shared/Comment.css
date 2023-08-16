@@ -81,3 +81,26 @@
 .reply-comment-input > input {
     width: 100%;
 }
+
+.comment-buttons {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    width:100px;
+}
+
+.comment-buttons > button {
+    outline:none;
+    border:none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:50%;
+    width:50%;
+}
+
+.comment-buttons .delete-comment-button {
+    color:white;
+}

@@ -28,6 +28,7 @@ function replyReducer(state,action) {
 };
 
 
+
 const CommentModule = props => {
     const [comments, setComments] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -81,7 +82,8 @@ const CommentModule = props => {
                 toggleResetInput();
             }
         } catch (err) {
-            setError(err);
+            const error = new Error("Unknown Error Occured");
+            setError(error.message);
         }
     };
 
@@ -217,6 +219,8 @@ const CommentModule = props => {
                                         setError={setError}
                                         replies={comment.replies}
                                         replyToComment = {replyToComment}
+                                        userId={comment.doc.id}
+                                        toggleResetComment={toggleResetComment}
                                     />
                                 )
                             })}

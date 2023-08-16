@@ -60,6 +60,34 @@ const Comment = props => {
         setViewReplies(false);
     };
 
+    const deleteComment = async () => {
+        props.setIsLoading(true);
+
+        try {
+            let response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/shared/deleteComment/${auth.entity}/${auth.userId}`, {
+                method: "POST",
+                headers : {
+                "Content-Type" : "application/json",
+                "Authorization" : ("Bearer " + auth.token),
+                },
+                body: JSON.stringify({
+                    postId: props.postId,
+                    postEntity: props.postEntity,
+                    commentId: props.id
+                })
+            });
+
+            if (response.ok) {
+                props.setIsLoading(false);
+                props.toggleResetComment();
+            } else {
+                props.setError("Unknown Error Occured");
+            }
+        } catch (err) {
+            throw new Error("Unknown Error Occured");
+        }
+    };
+
     return (
         <div className="comment-post-container">
             <div className="comment-post-main">
@@ -72,7 +100,13 @@ const Comment = props => {
                     <h6>{props.username}</h6>
                     <span className = "comment-text">{props.text}</span>
                 </div>
-                <div className = "comment-like-button">
+                <div className = "comment-buttons">
+                    {
+                        (props.userId === auth.userId) &&
+                        <button className="delete-comment-button" onClick={deleteComment} type = "button">
+                            <i className="fa fa-trash fa-2x"></i>
+                        </button>
+                    }
                     <button className={likeState ? "redHeart heart" : "heart"} onClick={toggleLike} type = "button">
                         <i className="fa fa-heart fa-2x"></i>
                     </button>
@@ -86,15 +120,21 @@ const Comment = props => {
                     </div>) 
                 :
                     (<div className="comment-post-replies">
-                        {replies.map((reply,index) => {
+                        {replies.map(reply => {
                             return (
                                 <Reply 
-                                    id = {index}
+                                    id = {reply.id}
+                                    userId={reply.doc.id}
                                     imgurl={reply.profilePicture}
                                     username={reply.doc.username}
                                     width="40"
                                     height="40"
                                     text={reply.body}
+                                    commentId={props.id}
+                                    setReplies={setReplies}
+                                    postEntity={props.postEntity}
+                                    postId={props.postId}
+                                    setIsLoading={props.setIsLoading}
                                 />
                             )
                         })}

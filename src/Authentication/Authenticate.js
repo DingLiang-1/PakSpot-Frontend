@@ -68,7 +68,7 @@ function Authenticate() {
                     },
                     body: JSON.stringify({
                         email : formState.inputs.email.value,
-                        verificationCode : formState.inputs.verificationCode.value
+                        verification : formState.inputs.verificationCode.value
                     })
                 });
                 if (response.ok) {
